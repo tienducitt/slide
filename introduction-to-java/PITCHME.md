@@ -121,9 +121,6 @@ import com.lazada.cs.helpcenter.entity.*;
 
 - OR using a dependency management tool (`maven`,..)
 
-#HSLIDE
-## Collections
-<img src="http://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png" style="height: 450px"/>
 
 #HSLIDE
 ## Array
@@ -136,6 +133,11 @@ int[][] mArray = new int[10][20];
 
 intArray[0] = 0;
 ```
+
+#HSLIDE
+## Collections
+<img src="http://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png" style="height: 450px"/>
+
 
 #HSLIDE
 ## Generics & Collections
@@ -166,7 +168,7 @@ try {
 
 #HSLIDE
 ## Exception hierarchy
-<img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg" style="height: 450px"">
+<img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg" style="height: 450px">
 
 #HSLIDE
 ## Concurrency: Thread
@@ -234,7 +236,7 @@ public void add(int value){
 - Data structure
 
 #HSLIDE
-### Annotation
+## Annotation
 - Kind of comment or meta data
 - These annotaions can then be processed at compiled time or runtime by Java Reflection
 ```java
@@ -251,7 +253,8 @@ public class Article {
 }
 ```
 
-### Reflection
+#HSLIDE
+## Reflection
 Make it possible to inspect classes, interfaces, fields and methods at runtime
 
 ```java
