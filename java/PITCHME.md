@@ -2,6 +2,18 @@
 # Introduction to Java
 
 #HSLIDE
+# Agenda
+
+1. Overview
+2. Primitive type & wrapper classes
+3. Operators & flow control
+4. Package & Import
+5. Build and dependencies
+6. Collection Framework
+7. Exception handling
+8. Thread and concurrency
+
+#HSLIDE
 # Overview
 - Java is **crossplatform** - 'Write Once, Run Anywhere' **(WORA)**
 - Java is compiled to **Byte Code** (not to machine codes), which is executed by **Java Virtual Machine (JVM)**
@@ -11,7 +23,30 @@
 - concurrent
 
 #HSLIDE
-## Basic types
+## Flow control
+### Loops:
+- while Loop
+- do while
+- for loop
+### If else
+- if ... else if ... else
+- switch case
+
+#HSLIDE
+## Operators
+|Operator type  |Operator                   |
+|---------------|---------------------------|
+|Assignment     | =, +=, *= …^=             |
+|Arithmetical   | +, -, *, /, %             |
+|Relational     | <, >, <=, >=, ==, !=      |
+|Logical        | &&, &#124;&#124;          |
+|Bitwise        | &, &#124;, ^, >>, <<, >>> |
+|Unary          | ++, --, +, -, !           |
+|Relational2    | instanceof                |
+
+
+#HSLIDE
+## Primitive types
 | Type          | Size          | Range             |
 | ------------- |:-------------:| -----------------:|
 | boolean       | undefined*    | true/false        |
@@ -26,93 +61,33 @@
 * Not defined by specification, but actually 1 byte in hotspot.
 
 #HSLIDE
-## Operators
-|Operator type  |Operator                   |
-|---------------|---------------------------|
-|Assignment     | =, +=, *= …^=             |
-|Arithmetical   | +, -, *, /, %             |
-|Relational     | <, >, <=, >=, ==, !=      |
-|Logical        | &&, &#124;&#124;          |
-|Bitwise        | &, &#124;, ^, >>, <<, >>> |
-|Unary          | ++, --, +, -, !           |
-|Relational2    | instanceof                |
+## Wrapper classes
+<img src="https://www.ntu.edu.sg/home/ehchua/programming/java/images/OOP_WrapperClass.png" />
 
 #HSLIDE
-## if else
+## String
+- String
 ```java
-if (18 == yourAge) {
-    // у вас всё хорошо
-} else if (yourAge > 18
-           && yourAge <= 25) {
-    // бывало и лучше
-} else {
-    // ¯\_(ツ)_/¯
-}
+String greeting = "Hello" + "world!";
 ```
-#HSLIDE
-## switch case
+- StringBuilder
 ```java
-switch (countOfApple) {
-    case 1: // у нас есть 1 яблоко
-        break;
-    case 2: // у нас есть 2 яблока
-        break;
-    …
-    default:
-        // прочие случаи
-        break;
-}
-
+StringBuilder builder = new StringBuilder();
+builder.append("Hello ");
+builder.append("World!");
+builder.toString();
 ```
-
-#HSLIDE
-## loops
-```
-while (expression) statement
-
-do { statement } while (expression)
-
-for (initialization; termination; increment)
-    statement
-```
-**Examples:**
+- StringBuffer
 ```java
-int[] digits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-for (int i : digits) {
-    System.out.println(“Digit: “ + i);
-}
-//Итерация для хипстеров
-IntStream.range(0, 10).forEach(digit -> System.out.println(digit));
-
-IntStream.range(0, 10).forEach(System.out::println);
+StringBuffer buffer = new StringBuffer();
+buffer.append("Hello world");
+buffer.toString();
 ```
-
-#HSLIDE
-# Methods
-```java
-public int getCountOfApples(List<Integer> boxes, Integer[] numberOfBoxes)
-        throws Throwable {
-
-    Integer sumOfApples = 0;
-    for (Integer i : numberOfBoxes) {
-        sumOfApples += boxes.get(i);
-    }
-    return sumOfApples;
-}
-```
-**Method signature** – method name + argument list
-
-Access modifier **public**  
-Return type **int**  
-Method name **getCountOfApples**  
-Parameter list **( … )**  
-Exception list **throws Throwable**  
-Method body **{ … }**  
 
 #HSLIDE
 ## Package
 ```java
-package com.lazada.cs.helpcenter.entity;
+package com.lazada.cs.helpcenter.entity; <----
 
 public class Article {
 
@@ -123,7 +98,7 @@ public class Article {
 ```java
 package com.lazada.cs.helpcenter.dao;
 
-import com.lazada.cs.helpcenter.entity;
+import com.lazada.cs.helpcenter.entity; <----
 
 public class ArticleDAO {
 
@@ -132,21 +107,23 @@ public class ArticleDAO {
 
 #HSLIDE
 # Dependencies
-You can build your apps (or libraries) to a `jar` file (java archive)
 
-To you a library, just import the necessary `jar` file
+- You can build your apps (or libraries) to a `jar` file (java archive)
 
-OR using a dependency management tool (`maven`,..)
+- To you a library, just import the necessary `jar` file
 
-#HSLIDE
-# Collections
-<img src="http://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png"/>
+- OR using a dependency management tool (`maven`,..)
+
 
 #HSLIDE
 # Generics
 
 #HSLIDE
-# Error handling
+# Collections
+<img src="http://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png" style="width: 800px"/>
+
+#HSLIDE
+# Exception handling try-catch-finally
 ```java
 try {
     // do something
@@ -161,10 +138,11 @@ try {
 
 #HSLIDE
 # Exception hierarchy
-<img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg">
+<img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg" style="width: 800px">
 
 #HSLIDE
 # Concurrency: Thread
+
 
 #HSLIDE
 # Annotation
