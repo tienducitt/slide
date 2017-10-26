@@ -1,2 +1,2 @@
-theme-override : java/PITCHME.css
+theme-override : introduction-to-java/PITCHME.css
 slide-number: true
