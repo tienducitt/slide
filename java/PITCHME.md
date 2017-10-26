@@ -14,7 +14,7 @@
 8. Thread and concurrency
 
 #HSLIDE
-# Overview
+## Overview
 - Java is **crossplatform** - 'Write Once, Run Anywhere' **(WORA)**
 - Java is compiled to **Byte Code** (not to machine codes), which is executed by **Java Virtual Machine (JVM)**
 - automatic memory management **(GC)**
@@ -24,13 +24,13 @@
 
 #HSLIDE
 ## Flow control
-### Loops:
-- while Loop
-- do while
-- for loop
-### If else
-- if ... else if ... else
-- switch case
+* Loops:
+    - while Loop
+    - do while
+    - for loop
+* If else
+    - if ... else if ... else
+    - switch case
 
 #HSLIDE
 ## Operators
@@ -106,7 +106,7 @@ public class ArticleDAO {
 ```
 
 #HSLIDE
-# Dependencies
+## Dependencies
 
 - You can build your apps (or libraries) to a `jar` file (java archive)
 
@@ -116,14 +116,14 @@ public class ArticleDAO {
 
 
 #HSLIDE
-# Generics
+## Generics
 
 #HSLIDE
-# Collections
+## Collections
 <img src="http://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png" style="width: 800px"/>
 
 #HSLIDE
-# Exception handling try-catch-finally
+## Exception handling try-catch-finally
 ```java
 try {
     // do something
@@ -137,22 +137,22 @@ try {
 ```
 
 #HSLIDE
-# Exception hierarchy
+## Exception hierarchy
 <img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg" style="width: 800px">
 
 #HSLIDE
-# Concurrency: Thread
+## Concurrency: Thread
 
 
 #HSLIDE
-# Annotation
-# Reflection
+### Annotation
+### Reflection
 
 #HSLIDE
-# You should know
-## `==` and `Equals`
-## String concatenate
-## `Equals` & `HashMap`
+## You should know
+### `==` and `Equals`
+### String concatenate
+### `Equals` & `HashMap`
 
 #HSLIDE
-# Resources:
+## Resources:
