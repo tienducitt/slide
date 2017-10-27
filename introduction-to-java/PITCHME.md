@@ -96,6 +96,7 @@ public class Article {
 }
 ```
 
+#HSLIDE
 ## Import
 Import 1 file from a pa
 ```java
@@ -156,19 +157,24 @@ List<Integer> list = new ArrayList<Integer>();  // ArrayList is implementation o
 ## Exception handling try-catch-finally
 ```java
 try {
-    // do something
+    // SQL query
 } catch (SQLException ex) {
     _logger.error(ex.getMessage(), ex)
 } catch (Exception ex) {
-    _logger.error(ex.getMessage(), ex)
+    throw err
 } finally {
     conn.close();
 }
 ```
 
 #HSLIDE
-## Exception hierarchy
-<img src="https://www.tutorialspoint.com/java/images/exceptions1.jpg" style="height: 450px">
+### Exceptions hierarchy
+<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/exception.png" alt="exception" style="width: 700px;"/>
+
+
+#HSLIDE
+##Checked exceptions must be handled (catch it or throws)
+
 
 #HSLIDE
 ## Concurrency: Thread
@@ -271,4 +277,4 @@ for(Method method : methods){
 - Java docs: sure
 - http://javarevisited.blogspot.com/: java interview questions
 - Java source code, grepcode.com: document can lie, code cannot
-- Book: Java Effective !!! (2nd 2008, 3rd is coming this year)
+- Book: Effective Java ! (2nd 2008, 3rd is coming by the end of this year!!!)
