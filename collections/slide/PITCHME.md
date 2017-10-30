@@ -8,8 +8,10 @@
 2. Queue
 3. Map
 4. Set
-5. Synchronized collections
-6. Concurrency collections
+
+#HSLIDE
+## Collections
+<img src="http://fresh2refresh.com/wp-content/uploads/2013/08/Java-Framework.png" style="height: 450px"/>
 
 #HSLIDE
 ## List
