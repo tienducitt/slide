@@ -23,11 +23,10 @@ Represents an ordered list of objects, you can access the elements of a List in 
 1. ArrayList
 2. LinkedList
 3. Vector
-4. Stack
 
 #HSLIDE
 ## ArrayList
-* Auto resizeable-array implementation of List interface
+* Auto **resizeable-array** implementation of List interface
 
 #HSLIDE
 ### ArrayList. Internals #1
@@ -187,12 +186,9 @@ Hashing collections like HashMap, HashSet,... work base on **hashing mechanism**
 
 #HSLIDE
 ## general contract of hashCode
-From the Object specification [JavaSE6]:
-
-> Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.
-> If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.
-> It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.
-
+- Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer
+- a.equals(b) => a.hashCode() == b.hashCode()
+- !a.equals(b) => that's fine if a.hashCode() == b.hashCode()
 
 #HSLIDE
 ## Always override hashCode when you override equals
