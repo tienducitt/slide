@@ -12,17 +12,16 @@
 6. Concurrency collections
 
 #HSLIDE
-## java.util.List
-
-Represents an ordered list of objects, meaning you can access the elements of a List in a specific order, and by index too.
+## List
+Represents an ordered list of objects, you can access the elements of a List in a specific order, or by index.
 
 #HSLIDE
 ## List implementations
 
-1. java.util.ArrayList
-2. java.util.LinkedList
-3. java.util.Vector
-4. java.util.Stack
+1. ArrayList
+2. LinkedList
+3. Vector
+4. Stack
 
 #HSLIDE
 ## ArrayList
@@ -32,7 +31,7 @@ Represents an ordered list of objects, meaning you can access the elements of a 
 ### ArrayList. Internals #1
 
 ```java
-List<String> list = new ArrayList<>(10x1);
+List<String> list = new ArrayList<>(10);
 ```
 <img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/newarray.png" alt="exception" style="width: 600px;"/>
 
@@ -63,7 +62,7 @@ Not enough capacity. Need (auto)resize.
 
 <img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/arrayresized.png" alt="exception" style="width: 750px;"/>
 
-<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/array10.png" alt="exception" style="width: 750px
+<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/array10.png" alt="exception" style="width: 750px />
 
 #HSLIDE
 ### ArrayList. Complexity
@@ -93,7 +92,7 @@ Java 7u40
 
 #HSLIDE
 ## LinkedList
-Doubly-linked list implementation of the List
+Doubly-linked list implementation
 ```java
     public class LinkedList<E> ... {
         Node<E> first;
@@ -130,7 +129,7 @@ The head of this queue is the least element according to the specified ordering
 
 #HSLIDE
 ## Heap
-<img src="http://coopsoft.com/ar/i/heapArray.png" style="width: 600px;"></img>
+<img src="http://coopsoft.com/ar/i/heapArray.png" style="width: 500px;"></img>
 
 
 #HSLIDE
@@ -152,7 +151,7 @@ Key is unique
 
 #HSLIDE
 ## HashMap
-O(1) time complexity map based on hashing mechanism
+O(1) time complexity map based on **hashing mechanism**
 
 #HSLIDE
 ## HashMap. Complexity
@@ -187,11 +186,11 @@ Hashing collections like HashMap, HashSet,... work base on **hashing mechanism**
 #HSLIDE
 ## general contract of hashCode
 From the Object specification [JavaSE6]:
-```
-- Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.
-- If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.
-- It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.
-```
+
+> Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.
+> If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.
+> It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.
+
 
 #HSLIDE
 ## Always override hashCode when you override equals
@@ -210,6 +209,10 @@ Read effective java 2nd Chapter 3. Item 9
 A map implementations based on Red-Black Tree
 
 #HSLIDE
+## TreeMap
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Red-black_tree_example.svg" style="height: 500px;"/>
+
+#HSLIDE
 ## TreeMap. Complexity
 |  containsKey  | get   | put   | remove |
 |:----------:|:-----:|:-----:|:------:|
@@ -217,11 +220,14 @@ A map implementations based on Red-Black Tree
 
 #HSLIDE
 ## Set
-- Collection of unique items.
-- In java, almost every Set is implemented by map internally with key is the item of the map, value is a dummy object.
+- Collection of **unique** items.
+- In java, almost every Set is **implemented by map** internally with key is the item of the map, value is a dummy object.
 
 #HSLIDE
 ## Set implementations
 1. HashSet ~ HashMap
 2. LinkHashSet ~ LinkedHashSet
 3. TreeSet ~ TreeMap
+
+#HSLIDE
+## Thank you!
