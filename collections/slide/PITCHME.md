@@ -1,0 +1,227 @@
+#HSLIDE
+# Collections in Java
+
+#HSLIDE
+## Agenda
+
+1. List
+2. Queue
+3. Map
+4. Set
+5. Synchronized collections
+6. Concurrency collections
+
+#HSLIDE
+## java.util.List
+
+Represents an ordered list of objects, meaning you can access the elements of a List in a specific order, and by index too.
+
+#HSLIDE
+## List implementations
+
+1. java.util.ArrayList
+2. java.util.LinkedList
+3. java.util.Vector
+4. java.util.Stack
+
+#HSLIDE
+## ArrayList
+* Auto resizeable-array implementation of List interface
+
+#HSLIDE
+### ArrayList. Internals #1
+
+```java
+List<String> list = new ArrayList<>(10x1);
+```
+<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/newarray.png" alt="exception" style="width: 600px;"/>
+
+```java
+list.add("0");
+list.add("1");
+```
+
+<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/array1.png" alt="exception" style="width: 600px;"/>
+
+
+#HSLIDE
+### ArrayList. Internals #2
+```java
+list.addAll(Arrays.asList("2", "3", "4", "5", "6", "7", "8"));
+list.add("9");
+```
+
+<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/array9.png" alt="exception" style="width: 600px;"/>
+
+
+#HSLIDE
+### ArrayList. Internals #3
+```java
+list.add("10");
+```
+Not enough capacity. Need (auto)resize.
+
+<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/arrayresized.png" alt="exception" style="width: 750px;"/>
+
+<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/array10.png" alt="exception" style="width: 750px
+
+#HSLIDE
+### ArrayList. Complexity
+
+|  contains  | add   | get   |  set  | remove |
+|:----------:|:-----:|:-----:|:-----:|:------:|
+| O(n)       | O(1)* |  O(1) |  O(1) | O(n)   |
+
+#HSLIDE
+## ArrayList. History
+Before Java 7u40
+```java
+    /**
+    Constructs an empty list with an initial capacity of ten.
+    */
+    public ArrayList() {
+        this(10);
+    }
+```
+Java 7u40
+```java
+    public ArrayList() {
+        super();
+        this.elementData = EMPTY_ELEMENTDATA;
+    }
+```
+
+#HSLIDE
+## LinkedList
+Doubly-linked list implementation of the List
+```java
+    public class LinkedList<E> ... {
+        Node<E> first;
+        Node<E> last;
+    }
+
+    private static class Node<E> {
+        E item;
+        Node<E> next;
+        Node<E> prev;
+    }
+```
+
+#HSLIDE
+## LinkedList. Complexity
+
+|  contains  | add   | get   |  set  | remove |
+|:----------:|:-----:|:-----:|:-----:|:------:|
+| O(n)       | O(1)  |  O(n) |  O(n) | O(n)   |
+
+#HSLIDE
+## Queue
+First In First Out (FIFO) data structure interface.
+
+#HSLIDE
+## Queue. implementations
+1. LinkedList
+2. PriorityQueue
+
+#HSLIDE
+## PriorityQueue
+An unbounded queue based on heap data structure.
+The head of this queue is the least element according to the specified ordering
+
+#HSLIDE
+## Heap
+<img src="http://coopsoft.com/ar/i/heapArray.png" style="width: 600px;"></img>
+
+
+#HSLIDE
+## Heap. Complexity
+|  add      | peek   |  poll        |  new  |
+|:---------:|:------:|:------------:|:-----:|
+| O(log(n)) | O(1)   |  O(log(n))   |  O(n) |
+
+#HSLIDE
+## Map
+Collections of key-value pair.
+Key is unique
+
+#HSLIDE
+## Map. implementations
+1. HashMap
+2. LinkedHashMap
+3. TreeMap
+
+#HSLIDE
+## HashMap
+O(1) time complexity map based on hashing mechanism
+
+#HSLIDE
+## HashMap. Complexity
+|  containsKey  | get   | put   | remove |
+|:----------:|:-----:|:-----:|:------:|
+| O(1)       | O(1)  |  O(1) | O(1)  |
+
+
+#HSLIDE
+## Hashing Collection
+Hashing collections like HashMap, HashSet,... work base on **hashing mechanism**.
+
+- How hashing mechanism work?
+
+- How HashMap work internally?
+
+#HSLIDE
+## HashMap. Internals
+<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/hashmap.png" />
+
+#HSLIDE
+## equals and hashCode functions
+```java
+    public class Object {
+        public boolean equals(Object obj) {
+            return (this == obj);
+        }
+        public native int hashCode();
+    }
+```
+
+#HSLIDE
+## general contract of hashCode
+From the Object specification [JavaSE6]:
+```
+- Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.
+- If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.
+- It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.
+```
+
+#HSLIDE
+## Always override hashCode when you override equals
+
+#HSLIDE
+## How to implement hashCode properly?
+Read effective java 2nd Chapter 3. Item 9
+
+#HSLIDE
+## LinkedHashMap
+- HashMap is not guarantee any order when you loop through it!
+- LinkedHashMap extends from HashMap and a provide insert order
+
+#HSLIDE
+## TreeMap
+A map implementations based on Red-Black Tree
+
+#HSLIDE
+## TreeMap. Complexity
+|  containsKey  | get   | put   | remove |
+|:----------:|:-----:|:-----:|:------:|
+| O(log(n))       | O(log(n))  |  O(log(n)) | O(log(n))  |
+
+#HSLIDE
+## Set
+- Collection of unique items.
+- In java, almost every Set is implemented by map internally with key is the item of the map, value is a dummy object.
+
+#HSLIDE
+## Set implementations
+1. HashSet ~ HashMap
+2. LinkHashSet ~ LinkedHashSet
+3. TreeSet ~ TreeMap

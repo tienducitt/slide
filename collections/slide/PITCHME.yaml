@@ -1,0 +1,2 @@
+theme-override : collections/slide/PITCHME.css
+slide-number: true
