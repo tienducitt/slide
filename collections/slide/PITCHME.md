@@ -83,6 +83,15 @@ Before Java 7u40
         this(10);
     }
 ```
+Memory Leak
+```java
+    public class MyClass {
+        private List<AnotherObject> list = new ArrayList<>();
+    }
+```
+
+#HSLIDE
+## ArrayList. History
 Java 7u40
 ```java
     public ArrayList() {

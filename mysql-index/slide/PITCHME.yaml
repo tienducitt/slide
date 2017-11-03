@@ -1,0 +1,2 @@
+theme-override : mysql-index/slide/PITCHME.css
+slide-number: true
