@@ -29,7 +29,7 @@ Data structures that storage engines use to find rows quickly
 #HSLIDE
 ## B+-Tree in MySQL
 
-<img src="/assets/b-tree.jpg">
+<img src="mysql-index/assets/b-tree.jpg">
 
 #HSLIDE
 ## Does MySQL alway use index?
