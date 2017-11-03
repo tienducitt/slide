@@ -1,5 +1,5 @@
 #HSLIDE
-# MySQL - From index to selectivity and covering index
+## MySQL - From index to selectivity and covering index
 ReydentX
 
 #HSLIDE
