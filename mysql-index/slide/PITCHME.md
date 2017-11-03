@@ -11,21 +11,24 @@ ReydentX
 
 #HSLIDE
 ## What is an index?
-- Data structures that storage engines use to find rows quickly
+Data structures that storage engines use to find rows quickly
 
 #HSLIDE
 ## Index
-- Speed up SELECTs
-- Slows down writes
-- More disk space used
+&#8593; Speed up SELECTs
+
+&#8595; Slows down writes
+
+&#8595; More disk space used
 
 #HSLIDE
 ## B-Tree indexes
-- Table itself is a B-tree (cluster index) order by primary key, non-primary columns is attached to it.
+- Table itself is a B-tree order by primary key, non-primary columns is attached to it.
 - Secondary index is a B-Tree order by `index key`, primary key is attached to it.
 
 #HSLIDE
 ## B+-Tree in MySQL
+
 <img src="/assets/b-tree.jpg">
 
 #HSLIDE
@@ -36,6 +39,7 @@ ReydentX
 
 #HSLIDE
 ## Selectivity
+Selectivity = Distinct Values / Total Number Rows
 
 #HSLIDE
 ## "Table scan" & "Index scan"?
@@ -166,7 +170,12 @@ But this one will
 SELECT sql_no_cache *
     FROM document d
         JOIN
-            (SELECT id FROM document WHERE enable=1 ORDER BY id LIMIT 60000,1) de
+            (SELECT id
+                FROM document
+                WHERE enable=1
+                ORDER BY id
+                LIMIT 60000,1
+            ) de
         ON d.id = de.id;
 ```
 
@@ -175,10 +184,9 @@ SELECT sql_no_cache *
 - MySQL can use multiple-column indexes for queries that test all the columns in the index or query that test the left most columns
 
 #HSLIDE
-## Examples
-
-#HSLIDE
-## Summary
-
-#HSLIDE
 ## Thank you
+
+#HSLIDE
+## Reference
+- High Performance MySQL
+- MySQL document
