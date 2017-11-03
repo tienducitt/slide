@@ -15,8 +15,8 @@ import java.util.Map;
 public class ExHashMap_EqualsAndHashCode {
     public static void main(String[] args) {
         Map<Article, Integer> map = new HashMap<>();
-        map.put(new Article(1,1), 1);
-        
+        map.put(new Article(1, 1), 1);
+
         System.out.println(map.get(new Article(1, 2)));
     }
 }
