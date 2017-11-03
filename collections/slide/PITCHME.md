@@ -16,6 +16,13 @@
 #HSLIDE
 ## List
 Represents an ordered list of objects, you can access the elements of a List in a specific order, or by index.
+```java
+boolean add(E e);
+E get(int index);
+E set(int index, E element);
+boolean remove(int index);
+boolean contains(Object o);
+```
 
 #HSLIDE
 ## List implementations
@@ -27,43 +34,6 @@ Represents an ordered list of objects, you can access the elements of a List in 
 #HSLIDE
 ## ArrayList
 * Auto **resizeable-array** implementation of List interface
-
-#HSLIDE
-### ArrayList. Internals #1
-
-```java
-List<String> list = new ArrayList<>(10);
-```
-<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/newarray.png" alt="exception" style="width: 600px;"/>
-
-```java
-list.add("0");
-list.add("1");
-```
-
-<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/array1.png" alt="exception" style="width: 600px;"/>
-
-
-#HSLIDE
-### ArrayList. Internals #2
-```java
-list.addAll(Arrays.asList("2", "3", "4", "5", "6", "7", "8"));
-list.add("9");
-```
-
-<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/array9.png" alt="exception" style="width: 600px;"/>
-
-
-#HSLIDE
-### ArrayList. Internals #3
-```java
-list.add("10");
-```
-Not enough capacity. Need (auto)resize.
-
-<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/arrayresized.png" alt="exception" style="width: 750px;"/>
-
-<img src="https://raw.githubusercontent.com/rybalkinsd/atom/master/lecture03/presentation/assets/img/array10.png" alt="exception" style="width: 750px />
 
 #HSLIDE
 ### ArrayList. Complexity
@@ -83,7 +53,7 @@ Before Java 7u40
         this(10);
     }
 ```
-Memory Leak
+Memory leak
 ```java
     public class MyClass {
         private List<AnotherObject> list = new ArrayList<>();
@@ -125,7 +95,12 @@ Doubly-linked list implementation
 
 #HSLIDE
 ## Queue
-First In First Out (FIFO) data structure interface.
+```java
+boolean add(E e);
+E peek();
+E poll();
+E remove();
+```
 
 #HSLIDE
 ## Queue. implementations
@@ -141,7 +116,6 @@ The head of this queue is the least element according to the specified ordering
 ## Heap
 <img src="http://coopsoft.com/ar/i/heapArray.png" style="width: 500px;"></img>
 
-
 #HSLIDE
 ## Heap. Complexity
 |  add      | peek   |  poll        |  new  |
@@ -152,6 +126,13 @@ The head of this queue is the least element according to the specified ordering
 ## Map
 Collections of key-value pair.
 Key is unique
+```java
+V put(K key, V value);
+V get(Object key);
+void clear();
+Set<K> keySet()
+Set<Map.Entry<K,V>> entrySet();
+```
 
 #HSLIDE
 ## Map. implementations
@@ -229,6 +210,10 @@ A map implementations based on Red-Black Tree
 ## Set
 - Collection of **unique** items.
 - In java, almost every Set is **implemented by map** internally with key is the item of the map, value is a dummy object.
+```java
+    boolean add(E e);
+    boolean contains(Object o);
+```
 
 #HSLIDE
 ## Set implementations
