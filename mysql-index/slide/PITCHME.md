@@ -85,7 +85,7 @@ possible_keys: PRIMARY
 ```
 
 #HSLIDE
-##Explain type. ref
+## Explain type. ref
 ```sql
     explain select * from employees where first_name="Shahab" \G;
 ```
@@ -106,7 +106,7 @@ possible_keys: employee_first_name
 ```
 
 #HSLIDE
-##Expain type. index
+## Expain type. index
 ```sql
     explain select emp_no from employees where first_name like '%y' \G;
 ```
@@ -127,7 +127,7 @@ possible_keys: NULL
 ```
 
 #HSLIDE
-##Explain type all
+## Explain type all
 ```sql
     explain select * from employees where year(hire_date) = 2017 \G;
 ```
