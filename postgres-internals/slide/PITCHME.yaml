@@ -1,2 +1,2 @@
-theme-override : mysql-index/slide/PITCHME.css
+theme-override : postgres-internals/slide/PITCHME.css
 slide-number: true
