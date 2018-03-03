@@ -35,6 +35,7 @@ Duc Nguyen
 addresses.addresses=# SELECT datname, oid
                       FROM pg_database
                       WHERE datname = 'addresses.addresses';
+
        datname       |  oid
 ---------------------+-------
  addresses.addresses | 41024
@@ -51,6 +52,7 @@ addresses.addresses=# SELECT datname, oid
 addresses.addresses=# SELECT relname, oid, relfilenode
                       FROM pg_class
                       WHERE relname = 'location_trees';
+
     relname     |  oid  | relfilenode
 ----------------+-------+-------------
  location_trees | 41058 |       41058
@@ -67,6 +69,7 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 addresses.addresses=# SELECT relname, oid, relfilenode
                       FROM pg_class
                       WHERE relname = 'location_trees_lazada_id';
+
          relname          |  oid  | relfilenode
 --------------------------+-------+-------------
  location_trees_lazada_id | 41090 |       41090
@@ -81,6 +84,7 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 
 <img src="postgres-internals/assets/heap_table_file.png">
 Page: a block of content (8KB default)
+
 Line pointers: 4-byte number address to each tuple
 
 #HSlIDE
