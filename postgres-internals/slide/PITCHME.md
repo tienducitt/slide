@@ -87,13 +87,13 @@ Page: a block of content (8KB default)
 
 Line pointers: 4-byte number address to each tuple
 
-#HSlIDE
+#HSLIDE
 
 ## B-Tree Index
 
 *   <Image>: what is a B-tree
 
-#HSlIDE
+#HSLIDE
 
 ## B-Tree index in postgreSQL
 
@@ -101,7 +101,7 @@ Line pointers: 4-byte number address to each tuple
 *   Leaf node contain keys and pointers to the heap (ctid)
 *   When table has new tuples, new tuple is added to index tree
 
-#HSlIDE
+#HSLIDE
 
 ## MVCC (Multi version concurrent control)
 
@@ -109,33 +109,33 @@ Problem: someone reading data, while someone else is writing to it
 Reader might see inconistent piece of data
 MVCC: Allow reads & writes to happen concurrently
 
-#HSlIDE
+#HSLIDE
 
 ## MVCC - table
 
 *   Example of how postgres insert, update, delete a record
     -> xmin, xmax
 
-#HSlIDE
+#HSLIDE
 
 ## MVCC - insert
 
-#HSlIDE
+#HSLIDE
 
 ## MVCC - update
 
-#HSlIDE
+#HSLIDE
 
 ## MVCC - delete
 
-#HSlIDE
+#HSLIDE
 
 ## Table bloat
 
 Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 -> lots of UPDATEs will soon increase the tables's physical size
 
-#HSlIDE
+#HSLIDE
 
 ## Query explainer
 
@@ -152,11 +152,11 @@ EXPLAIN ANALYSE SELECT * FROM users;
 
 //TODO: add the table from Postgres explaining EXPLAIN
 
-#HSlIDE
+#HSLIDE
 
 ## Scan - Seq Scan
 
-#HSlIDE
+#HSLIDE
 
 ## Scan - Bitmap index scan
 
