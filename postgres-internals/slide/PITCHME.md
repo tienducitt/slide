@@ -32,7 +32,9 @@ Duc Nguyen
 ## Database
 
 ```sql
-addresses.addresses=# SELECT datname, oid FROM pg_database WHERE datname = 'addresses.addresses';
+addresses.addresses=# SELECT datname, oid
+                      FROM pg_database
+                      WHERE datname = 'addresses.addresses';
        datname       |  oid
 ---------------------+-------
  addresses.addresses | 41024
@@ -43,33 +45,37 @@ addresses.addresses=# SELECT datname, oid FROM pg_database WHERE datname = 'addr
 
 #HSLIDE
 
-## Table
+## Table files
 
 ```sql
-addresses.addresses=# SELECT relname, oid, relfilenode FROM pg_class WHERE relname = 'location_trees';
+addresses.addresses=# SELECT relname, oid, relfilenode
+                      FROM pg_class
+                      WHERE relname = 'location_trees';
     relname     |  oid  | relfilenode
 ----------------+-------+-------------
  location_trees | 41058 |       41058
 (1 row)
 ```
 
-<img src="postgres-internals/assets/table_files.png>
+<img src="postgres-internals/assets/table_files.png">
 
 #HSLIDE
 
 ## Index
 
 ```sql
-addresses.addresses=# SELECT relname, oid, relfilenode FROM pg_class WHERE relname = 'location_trees_lazada_id';
+addresses.addresses=# SELECT relname, oid, relfilenode
+                      FROM pg_class
+                      WHERE relname = 'location_trees_lazada_id';
          relname          |  oid  | relfilenode
 --------------------------+-------+-------------
  location_trees_lazada_id | 41090 |       41090
 (1 row)
 ```
 
-<img src="postgres-internals/assets/index_files.png>
+<img src="postgres-internals/assets/index_files.png">
 
-#HSlIDE
+#HSLIDE
 
 ## Heap Table Structure
 
