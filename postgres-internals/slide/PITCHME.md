@@ -4,13 +4,13 @@
 
 Duc Nguyen
 
-#HSLIDE
+---
 
 ## PostgreSQL Internals
 
 <img src="postgres-internals/assets/PostgresQL_internals.png">
 
-#HSLIDE
+---
 
 ## Agenda
 
@@ -21,13 +21,13 @@ Duc Nguyen
 5.  Query explain: type of scan method
 6.  Index only scan
 
-#HSLIDE
+---
 
 ## Physical structure of databse
 
 <img src="postgres-internals/assets/PostgresQL_physical_structure.png">
 
-#HSLIDE
+---
 
 ## Database
 
@@ -44,7 +44,7 @@ addresses.addresses=# SELECT datname, oid
 
 <img src="postgres-internals/assets/database_base_folder.png">
 
-#HSLIDE
+---
 
 ## Table files
 
@@ -61,7 +61,7 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 
 <img src="postgres-internals/assets/table_files.png">
 
-#HSLIDE
+---
 
 ## Index
 
@@ -78,7 +78,7 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 
 <img src="postgres-internals/assets/index_files.png">
 
-#HSLIDE
+---
 
 ## Heap Table Structure
 
@@ -87,55 +87,176 @@ Page: a block of content (8KB default)
 
 Line pointers: 4-byte number address to each tuple
 
-#HSLIDE
+---
 
-## B-Tree Index
+## Tuple identifier (tid)
 
-*   <Image>: what is a B-tree
+### (block_number)
 
-#HSLIDE
+Used to identify a tuple within a table.
 
-## B-Tree index in postgreSQL
+### (block, offset)
 
-*   Root node & inner nodes: contains keys & pointers to lower level nodes
-*   Leaf node contain keys and pointers to the heap (ctid)
-*   When table has new tuples, new tuple is added to index tree
+*   Block: block number of the page that contains the tuple
+*   Offset: offset number of the line pointer that points to the tuples
 
-#HSLIDE
+---
 
-## MVCC (Multi version concurrent control)
+## Writing of a heap tuple. (1)
+
+<img src="postgres-internal/assets/Tuple_before_insert.png">
+
+---
+
+## Writing of a heap tuple. (2)
+
+<img src="postgres-internal/assets/Tuple_after_insert.png">
+
+---
+
+## Structure of a tuple
+
+<img src="postgres-internal/assets/tuple_structure">
+* t_xmin: txid of the transaction that inserted this tuple
+* t_xmax: txid of the transaction that deleted this tuples. (t_xmax is 0 when tuple is ACTIVE)
+* c_ctid: tuple id itself
+
+---
+
+## MVCC - Multi-version Concurrency Control
 
 Problem: someone reading data, while someone else is writing to it
 Reader might see inconistent piece of data
 MVCC: Allow reads & writes to happen concurrently
+=> Isolated level: uncommited read, committed read, repeatable read, phantom read
 
-#HSLIDE
+---
+
+## How PostgresQL can support MVCC?
+
+---
+
+## MVCC
+
+```sql
+CREATE TABLE users
+(id INTEGER
+    CONSTRAINT location_trees_pkey PRIMARY KEY,
+ name VARCHAR(100)
+    CONSTRAINT users_name_unique UNIQUE (username)
+);
+```
+
+---
+
+## MVCC - Table
+
+<br>
+<div class="left">
+    <ul style="list-style-type: none;">
+        <li>1. INSERT Alice</li>
+        <li>2. INSER Bob</li>
+        <li>3. UPDATE Bob -> Robert</li>
+        <li>4. INSERT Chalie</li>
+        <li>5. DELETE Alice</li>
+    </ul>
+</div>
+<div class="right">
+    <table>
+        <tr>
+            <th>xmin</th>
+            <th>xmax</th>
+            <th>ctid</th>
+            <th>id</th>
+            <th>name</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>5</td>
+            <td>(0,1)</td>
+            <td>1</td>
+            <td>Alice</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>3</td>
+            <td>(0,2)</td>
+            <td>2</td>
+            <td>Bob</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td></td>
+            <td>(0,3)</td>
+            <td>3</td>
+            <td>Robert</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td></td>
+            <td>(0,4)</td>
+            <td>4</td>
+            <td>Charlie</td>
+        </tr>
+    </table>
+</div>
+
+---
+
+##
+
+---
+
+## MVCC - Tables & indexes
+
+*   Record data is stored in tuple
+*   Primary indexes sorted by primary key and have pointer (tcip) points to the tuple
+*   Indexes in PostgresQL is a b-tree
+*   Root node & inner nodes: contains keys & pointers to lower level nodes
+*   Leaf node contain keys and pointers to the heap (ctid)
+*   When table has new tuples, new tuple is added to index tree
+
+---
+
+## MVCC - Tables & Indexes visualize
+
+I need a picture here to illutrate the heap table, primary key, secondary key
+
+---
+
+## Overral of Sequential scan and index scan
+
+---
+
+## MVCC (Multi version concurrent control)
+
+---
 
 ## MVCC - table
 
 *   Example of how postgres insert, update, delete a record
     -> xmin, xmax
 
-#HSLIDE
+---
 
 ## MVCC - insert
 
-#HSLIDE
+---
 
 ## MVCC - update
 
-#HSLIDE
+---
 
 ## MVCC - delete
 
-#HSLIDE
+---
 
 ## Table bloat
 
 Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 -> lots of UPDATEs will soon increase the tables's physical size
 
-#HSLIDE
+---
 
 ## Query explainer
 
@@ -146,41 +267,45 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 EXPLAIN ANALYSE SELECT * FROM users;
 ```
 
-#HSLIDE
+---
 
 ## Estimate Cost
 
 //TODO: add the table from Postgres explaining EXPLAIN
 
-#HSLIDE
+---
 
 ## Scan - Seq Scan
 
-#HSLIDE
+---
 
 ## Scan - Bitmap index scan
 
-#HSLIDE
+---
 
 ## Scan - Index scan
 
-#HSLIDE
+---
 
 ## Scan - Index only scan
 
-#HSLIDE
+---
 
 ## Joins - Nested Loop
 
-#HSLIDE
+---
 
 ## Joins - Merge
 
-#HSLIDE
+---
 
 ## Joins - Hash join
 
-#HSLIDE
+---
+
+## Index only scan
+
+---
 
 ## Reference
 
