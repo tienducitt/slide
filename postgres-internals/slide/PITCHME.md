@@ -1,5 +1,3 @@
-#HSSIDE
-
 # Postgresql internals
 
 Duc Nguyen
