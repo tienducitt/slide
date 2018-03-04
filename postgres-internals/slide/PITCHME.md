@@ -87,16 +87,13 @@ Line pointers: 4-byte number address to each tuple
 
 #HSLIDE
 
-## Tuple identifier (tid)
-
-### (block_number)
+## TID - Tuple identifier: (block, offset)
 
 Used to identify a tuple within a table.
 
-### (block, offset)
-
 *   Block: block number of the page that contains the tuple
 *   Offset: offset number of the line pointer that points to the tuples
+    Example: (0, 2)
 
 #HSLIDE
 
@@ -150,7 +147,7 @@ CREATE TABLE users
 ## MVCC - Table
 
 <br>
-<div class="left">
+<div class="left" style="float:left; font-style: italic">
     <ul style="list-style-type: none;">
         <li>1. INSERT Alice</li>
         <li>2. INSER Bob</li>
@@ -201,18 +198,18 @@ CREATE TABLE users
 
 #HSLIDE
 
-##
+## MVCC - How repeatable read works?
 
 #HSLIDE
 
 ## MVCC - Tables & indexes
 
-*   Record data is stored in tuple
-*   Primary indexes sorted by primary key and have pointer (tcip) points to the tuple
-*   Indexes in PostgresQL is a b-tree
-*   Root node & inner nodes: contains keys & pointers to lower level nodes
-*   Leaf node contain keys and pointers to the heap (ctid)
-*   When table has new tuples, new tuple is added to index tree
+-   Record data is stored in tuple |
+-   Primary indexes sorted by primary key and have pointer (tcip) points to the tuple |
+-   Indexes in PostgresQL is a b-tree |
+-   Root node & inner nodes: contains keys & pointers to lower level nodes |
+-   Leaf node contain keys and pointers to the heap (ctid) |
+-   When table has new tuples, new tuple is added to index tree |
 
 #HSLIDE
 
