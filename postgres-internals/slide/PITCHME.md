@@ -99,19 +99,19 @@ Used to identify a tuple within a table.
 
 ## Writing of a heap tuple. (1)
 
-<img src="postgres-internal/assets/Tuple_before_insert.png">
+<img src="postgres-internals/assets/Tuple_before_insert.png">
 
 #HSLIDE
 
 ## Writing of a heap tuple. (2)
 
-<img src="postgres-internal/assets/Tuple_after_insert.png">
+<img src="postgres-internals/assets/Tuple_after_insert.png">
 
 #HSLIDE
 
 ## Structure of a tuple
 
-<img src="postgres-internal/assets/tuple_structure">
+<img src="postgres-internals/assets/tuple_structure">
 * t_xmin: txid of the transaction that inserted this tuple
 * t_xmax: txid of the transaction that deleted this tuples. (t_xmax is 0 when tuple is ACTIVE)
 * c_ctid: tuple id itself
