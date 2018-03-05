@@ -332,14 +332,16 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 
 ## Indexes
 
--   By default indexes in PostgresQL is a B-Tree
+Default indexes in PostgresQL is a B-Tree
 
 +++ 
 
 ## B-Tree
 <img src="postgres-internals/assets/b-tree.png">
 
---- Indexes
+--- 
+
+## Indexes
 
 -   <b>Primary indexes</b>: sorted by primary key and have pointer (tcip) points to the tuple |
 -   Root node & inner nodes: contains keys & pointers to lower level nodes |
