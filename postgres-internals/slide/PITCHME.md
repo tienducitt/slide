@@ -94,13 +94,13 @@ Used to identify a tuple within a table.
 *   Offset: offset number of the line pointer that points to the tuples
     Example: (0, 2)
 
----
++++
 
 ## Writing of a heap tuple. (1)
 
 <img src="postgres-internals/assets/Tuple_before_insert.png">
 
----
++++
 
 ## Writing of a heap tuple. (2)
 
@@ -144,7 +144,7 @@ Used to identify a tuple within a table.
 
 --- 
 ## Table
-<img src="postgres-internals/assets/heap-table-illutrate.jpg">
+<img src="postgres-internals/assets/heap_table_illutrate.jpg">
 
 +++
 
