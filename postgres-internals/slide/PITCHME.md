@@ -351,7 +351,7 @@ Default indexes in PostgresQL is a **B-Tree**
 
 ## Indexes
 
--   **Primary indexes**: sorted by primary key and have pointer (tcip) points to the tuple |
+-   **Primary indexes**: sorted by primary key and have pointer (tcip) points to the tuple 
 -   Root node & inner nodes: contains keys & pointers to lower level nodes |
 -   Leaf node contain keys and pointers to the heap (ctid) |
 
@@ -399,7 +399,9 @@ EXPLAIN SELECT * FROM location_trees ;
 ## When a query can use index?
 
 ```sql
-explain select * from location_trees WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
+EXPLAIN SELECT * 
+    FROM location_trees 
+    WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
 ```
 **We have parent_id index, would it use index to answer this query? And Why?**
 
@@ -408,7 +410,10 @@ explain select * from location_trees WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-
 ## Scan - Bitmap index scan
 
 ```sql
-explain select * from location_trees WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
+EXPLAIN 
+SELECT * 
+FROM location_trees 
+WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
                  QUERY PLAN
 ---------------------------------------------
  Bitmap Heap Scan on location_trees  (cost=4.38..35.08 rows=13 width=193)
@@ -421,7 +426,10 @@ explain select * from location_trees WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-
 
 ## Scan - Index scan
 ```sql
-EXPLAIN SELECT * FROM location_trees WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
+EXPLAIN 
+SELECT * 
+FROM location_trees 
+WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
                  QUERY PLAN
 ---------------------------------------------
  Index Scan using location_trees_parent_id_name_unique on location_trees  (cost=0.28..13.50 rows=13 width=193)
@@ -471,7 +479,7 @@ EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id =
 ```
 ---
 
-## Scan without the same other with index
+## Scan with the same other with index
 ```sql
 EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id = 95 AND active = true ORDER BY tracking_list_id, active LIMIT 1;
                  QUERY PLAN
