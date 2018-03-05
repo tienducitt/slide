@@ -374,7 +374,8 @@ Default indexes in PostgresQL is a **B-Tree**
 EXPLAIN ANALYSE SELECT * FROM users;
                  QUERY PLAN
 ---------------------------------------------
-Seq Scan on location_trees  (cost=0.00..68.87 rows=1787 width=193) (actual time=0.012..7.674 rows=1787 loops=1)
+Seq Scan on location_trees  (cost=0.00..68.87 rows=1787 width=193) 
+(actual time=0.012..7.674 rows=1787 loops=1)
  Planning time: 0.136 ms
  Execution time: 14.775 ms
 (3 rows)
@@ -432,29 +433,39 @@ FROM location_trees
 WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
                  QUERY PLAN
 ---------------------------------------------
- Index Scan using location_trees_parent_id_name_unique on location_trees  (cost=0.28..13.50 rows=13 width=193)
+ Index Scan using location_trees_parent_id_name_unique on location_trees  
+(cost=0.28..13.50 rows=13 width=193)
    Index Cond: (parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f'::uuid)
 (2 rows)
 ```
 ---
 
 ## Scan - Index only scan
+```sql
 EXPLAIN SELECT id FROM location_trees ORDER BY id LIMIT 1;
                  QUERY PLAN
 ---------------------------------------------
  Limit  (cost=0.28..0.43 rows=1 width=16)
-   ->  Index Only Scan using location_trees_pkey on location_trees  (cost=0.28..275.08 rows=1787 width=16)
+   ->  Index Only Scan using location_trees_pkey on location_trees  
+   (cost=0.28..275.08 rows=1787 width=16)
 (2 rows)
+```
 
 ---
 
 ## Scan with order by id
 ```sql
-EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id = 95 AND active = true ORDER BY id LIMIT 1;
+EXPLAIN ANALYSE SELECT * 
+FROM uploaded_tracking_numbers 
+WHERE tracking_list_id = 95 
+    AND active = true 
+ORDER BY id 
+LIMIT 1;
                  QUERY PLAN
 ---------------------------------------------
  Limit  (cost=0.42..0.48 rows=1 width=48) (actual time=72.065..72.066 rows=1 loops=1)
-   ->  Index Scan using uploaded_tracking_numbers_pkey on uploaded_tracking_numbers  (cost=0.42..36049.55 rows=643133 width=48) (actual time=72.064..72.064 rows=1 loops=1)
+   ->  Index Scan using uploaded_tracking_numbers_pkey on uploaded_tracking_numbers  (
+       cost=0.42..36049.55 rows=643133 width=48) (actual time=72.064..72.064 rows=1 loops=1)
          Filter: (active AND (tracking_list_id = 95))
          Rows Removed by Filter: 257283
  Planning time: 0.129 ms
@@ -466,11 +477,15 @@ EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id =
 
 ## Scan without order
 ```sql
-EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id = 95 AND active = true  LIMIT 1;
+EXPLAIN ANALYSE SELECT * 
+FROM uploaded_tracking_numbers 
+WHERE tracking_list_id = 95 
+AND active = true  LIMIT 1;
                  QUERY PLAN
 ---------------------------------------------
  Limit  (cost=0.00..0.03 rows=1 width=48) (actual time=34.305..34.305 rows=1 loops=1)
-   ->  Seq Scan on uploaded_tracking_numbers  (cost=0.00..21056.86 rows=643133 width=48) (actual time=34.304..34.304 rows=1 loops=1)
+   ->  Seq Scan on uploaded_tracking_numbers  (cost=0.00..21056.86 rows=643133 width=48) 
+   (actual time=34.304..34.304 rows=1 loops=1)
          Filter: (active AND (tracking_list_id = 95))
          Rows Removed by Filter: 256908
  Planning time: 0.087 ms
@@ -481,11 +496,18 @@ EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id =
 
 ## Scan with the same other with index
 ```sql
-EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id = 95 AND active = true ORDER BY tracking_list_id, active LIMIT 1;
+EXPLAIN ANALYSE SELECT * 
+FROM uploaded_tracking_numbers 
+WHERE tracking_list_id = 95 
+    AND active = true 
+ORDER BY tracking_list_id, active 
+LIMIT 1;
                  QUERY PLAN
 ---------------------------------------------
  Limit  (cost=0.42..0.50 rows=1 width=48) (actual time=0.596..0.597 rows=1 loops=1)
-   ->  Index Scan using uploaded_tracking_numbers_tracking_list_id_active_index on uploaded_tracking_numbers  (cost=0.42..45247.79 rows=643133 width=48) (actual time=0.595..0.595 rows=1 loops=1)
+   ->  Index Scan using uploaded_tracking_numbers_tracking_list_id_active_index 
+   on uploaded_tracking_numbers  (cost=0.42..45247.79 rows=643133 width=48) 
+   (actual time=0.595..0.595 rows=1 loops=1)
          Index Cond: ((tracking_list_id = 95) AND (active = true))
          Filter: active
  Planning time: 0.140 ms
