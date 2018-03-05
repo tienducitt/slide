@@ -20,6 +20,10 @@ Duc Nguyen
 
 ---
 
+# 1. Physical structure of database
+
+---
+
 ## Physical structure of databse
 
 <img src="postgres-internals/assets/PostgresQL_physical_structure.png">
@@ -74,6 +78,10 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 ```
 
 <img src="postgres-internals/assets/index_files.png">
+
+---
+
+# 2. Heap table structure
 
 ---
 
@@ -332,7 +340,7 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 
 ## Indexes
 
-Default indexes in PostgresQL is a B-Tree
+Default indexes in PostgresQL is a **B-Tree**
 
 +++ 
 
@@ -343,68 +351,148 @@ Default indexes in PostgresQL is a B-Tree
 
 ## Indexes
 
--   <b>Primary indexes</b>: sorted by primary key and have pointer (tcip) points to the tuple |
+-   **Primary indexes**: sorted by primary key and have pointer (tcip) points to the tuple |
 -   Root node & inner nodes: contains keys & pointers to lower level nodes |
 -   Leaf node contain keys and pointers to the heap (ctid) |
 
 ---
 
 ## Tables & Indexes visualize
-
-I need a picture here to illutrate the heap table, primary key, secondary key
-
----
-
-## Overral of Sequential scan and index scan
-
+<img src="postgres-internals/assets/table_and_index.png">
 ---
 
 ## Query explainer
 
-*   displays the execution plan that the PostgreSQL planner generates for the supplied statement
-*   how the table(s) will be scaned - by plain sequential scan / index scan - what join algoritms will be used (in case of multiple tables are references)
+*   Displays the execution plan that the PostgreSQL planner generates for the supplied statement |
+*   How the table(s) will be scaned - by plain sequential scan / index scan |
+*   What join algoritms will be used (in case of multiple tables are references) |
+
+--- 
+## Query explain - example
 
 ```sql
 EXPLAIN ANALYSE SELECT * FROM users;
+                 QUERY PLAN
+---------------------------------------------
+Seq Scan on location_trees  (cost=0.00..68.87 rows=1787 width=193) (actual time=0.012..7.674 rows=1787 loops=1)
+ Planning time: 0.136 ms
+ Execution time: 14.775 ms
+(3 rows)
+```
+
+*Cost: cost to seek 1 page (8KB) from hard disk*
+
+---
+
+## Scan - Seq Scan (1)
+
+```sql
+EXPLAIN SELECT * FROM location_trees ;
+                 QUERY PLAN
+---------------------------------------------
+ Seq Scan on location_trees  (cost=0.00..68.87 rows=1787 width=193)
+(3 rows)
 ```
 
 ---
 
-## Estimate Cost
+## When a query can use index?
 
-//TODO: add the table from Postgres explaining EXPLAIN
-
----
-
-## Scan - Seq Scan
+```sql
+explain select * from location_trees WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
+```
+**We have parent_id index, would it use index to answer this query? And Why?**
 
 ---
 
 ## Scan - Bitmap index scan
 
+```sql
+explain select * from location_trees WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
+                 QUERY PLAN
+---------------------------------------------
+ Bitmap Heap Scan on location_trees  (cost=4.38..35.08 rows=13 width=193)
+   Recheck Cond: (parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f'::uuid)
+   ->  Bitmap Index Scan on location_trees_parent_id_name_unique  (cost=0.00..4.38 rows=13 width=0)
+         Index Cond: (parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f'::uuid)
+```
+
 ---
 
 ## Scan - Index scan
-
+```sql
+EXPLAIN SELECT * FROM location_trees WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
+                 QUERY PLAN
+---------------------------------------------
+ Index Scan using location_trees_parent_id_name_unique on location_trees  (cost=0.28..13.50 rows=13 width=193)
+   Index Cond: (parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f'::uuid)
+(2 rows)
+```
 ---
 
 ## Scan - Index only scan
+EXPLAIN SELECT id FROM location_trees ORDER BY id LIMIT 1;
+                 QUERY PLAN
+---------------------------------------------
+ Limit  (cost=0.28..0.43 rows=1 width=16)
+   ->  Index Only Scan using location_trees_pkey on location_trees  (cost=0.28..275.08 rows=1787 width=16)
+(2 rows)
 
 ---
 
-## Joins - Nested Loop
+## Scan with order by id
+```sql
+EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id = 95 AND active = true ORDER BY id LIMIT 1;
+                 QUERY PLAN
+---------------------------------------------
+ Limit  (cost=0.42..0.48 rows=1 width=48) (actual time=72.065..72.066 rows=1 loops=1)
+   ->  Index Scan using uploaded_tracking_numbers_pkey on uploaded_tracking_numbers  (cost=0.42..36049.55 rows=643133 width=48) (actual time=72.064..72.064 rows=1 loops=1)
+         Filter: (active AND (tracking_list_id = 95))
+         Rows Removed by Filter: 257283
+ Planning time: 0.129 ms
+ Execution time: 72.089 ms
+(6 rows)
+```
 
 ---
 
-## Joins - Merge
-
+## Scan without order
+```sql
+EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id = 95 AND active = true  LIMIT 1;
+                 QUERY PLAN
+---------------------------------------------
+ Limit  (cost=0.00..0.03 rows=1 width=48) (actual time=34.305..34.305 rows=1 loops=1)
+   ->  Seq Scan on uploaded_tracking_numbers  (cost=0.00..21056.86 rows=643133 width=48) (actual time=34.304..34.304 rows=1 loops=1)
+         Filter: (active AND (tracking_list_id = 95))
+         Rows Removed by Filter: 256908
+ Planning time: 0.087 ms
+ Execution time: 34.331 ms
+(6 rows)
+```
 ---
 
-## Joins - Hash join
-
+## Scan without the same other with index
+```sql
+EXPLAIN ANALYSE SELECT * FROM uploaded_tracking_numbers WHERE tracking_list_id = 95 AND active = true ORDER BY tracking_list_id, active LIMIT 1;
+                 QUERY PLAN
+---------------------------------------------
+ Limit  (cost=0.42..0.50 rows=1 width=48) (actual time=0.596..0.597 rows=1 loops=1)
+   ->  Index Scan using uploaded_tracking_numbers_tracking_list_id_active_index on uploaded_tracking_numbers  (cost=0.42..45247.79 rows=643133 width=48) (actual time=0.595..0.595 rows=1 loops=1)
+         Index Cond: ((tracking_list_id = 95) AND (active = true))
+         Filter: active
+ Planning time: 0.140 ms
+ Execution time: 0.616 ms
+(6 rows)
+```
 ---
 
-## Index only scan
+## What's next?
+
+- MVCC (Multi-version concurrent control) |
+- Isolation level |
+- Locking |
+- Shared Buffer |
+- WAL (Write Ahead log) |
 
 ---
 
@@ -413,3 +501,7 @@ EXPLAIN ANALYSE SELECT * FROM users;
 *   PostgreSQL Documentation
 *   The Internals of PostgreSQL
 *   Grokking: PostgreSQL Internals workshop
+
+
+--- 
+# Thank you for listening
