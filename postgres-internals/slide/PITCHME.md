@@ -118,90 +118,6 @@ Used to identify a tuple within a table.
 
 #HSLIDE
 
-## MVCC - Multi-version Concurrency Control
-
-Problem: someone reading data, while someone else is writing to it
-Reader might see inconistent piece of data
-MVCC: Allow reads & writes to happen concurrently
-=> Isolated level: uncommited read, committed read, repeatable read, phantom read
-
-#HSLIDE
-
-## How PostgresQL can support MVCC?
-
-#HSLIDE
-
-## MVCC
-
-```sql
-CREATE TABLE users
-(id INTEGER
-    CONSTRAINT location_trees_pkey PRIMARY KEY,
- name VARCHAR(100)
-    CONSTRAINT users_name_unique UNIQUE (username)
-);
-```
-
-#HSLIDE
-
-## MVCC - Table
-
-<br>
-<div class="left" style="float:left; font-style: italic">
-    <ul style="list-style-type: none;">
-        <li>1. INSERT Alice</li>
-        <li>2. INSER Bob</li>
-        <li>3. UPDATE Bob -> Robert</li>
-        <li>4. INSERT Chalie</li>
-        <li>5. DELETE Alice</li>
-    </ul>
-</div>
-<div class="right">
-    <table>
-        <tr>
-            <th>xmin</th>
-            <th>xmax</th>
-            <th>ctid</th>
-            <th>id</th>
-            <th>name</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>5</td>
-            <td>(0,1)</td>
-            <td>1</td>
-            <td>Alice</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>3</td>
-            <td>(0,2)</td>
-            <td>2</td>
-            <td>Bob</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td></td>
-            <td>(0,3)</td>
-            <td>3</td>
-            <td>Robert</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td></td>
-            <td>(0,4)</td>
-            <td>4</td>
-            <td>Charlie</td>
-        </tr>
-    </table>
-</div>
-
-#HSLIDE
-
-## MVCC - How repeatable read works?
-
-#HSLIDE
-
 ## MVCC - Tables & indexes
 
 -   Record data is stored in tuple |
@@ -223,26 +139,167 @@ I need a picture here to illutrate the heap table, primary key, secondary key
 
 #HSLIDE
 
-## MVCC (Multi version concurrent control)
+## MVCC - Multi-version Concurrency Control
+
+Problem: someone reading data, while someone else is writing to it
+Reader might see inconistent piece of data
+MVCC: Allow reads & writes to happen concurrently
+
+#HSLIDE
+## ACID - Isolation level
+Read uncommitted
+Read committed
+Repeatable read
+Seriablizable 
 
 #HSLIDE
 
-## MVCC - table
+## How can PostgresQL support MVCC?
 
-*   Example of how postgres insert, update, delete a record
-    -> xmin, xmax
+#HSLIDE
+
+## MVCC
+
+```sql
+CREATE TABLE users
+(id INTEGER
+    CONSTRAINT location_trees_pkey PRIMARY KEY,
+ name VARCHAR(100)
+    CONSTRAINT users_name_unique UNIQUE (username)
+);
+```
+
 
 #HSLIDE
 
 ## MVCC - insert
+<br>
+<div class="left" style="float:left; font-style: italic">
+    <ul style="list-style-type: none;">
+        <li style="color: green;">1. INSERT Alice</li>
+        <li style="color: green;">2. INSERT Bob</li>
+    </ul>
+</div>
+<div class="right">
+    <table>
+        <tr>
+            <th>xmin</th>
+            <th>xmax</th>
+            <th>ctid</th>
+            <th>id</th>
+            <th>name</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td></td>
+            <td>(0,1)</td>
+            <td>1</td>
+            <td>Alice</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td></td>
+            <td>(0,2)</td>
+            <td>2</td>
+            <td>Bob</td>
+        </tr>
+    </table>
+</div>
 
 #HSLIDE
 
 ## MVCC - update
 
+<br>
+<div class="left" style="float:left; font-style: italic">
+    <ul style="list-style-type: none;">
+        <li>1. INSERT Alice</li>
+        <li>2. INSERT Bob</li>
+        <li style="color: green;">3. UPDATE Bob -> Robert</li>
+    </ul>
+</div>
+<div class="right">
+    <table>
+        <tr>
+            <th>xmin</th>
+            <th>xmax</th>
+            <th>ctid</th>
+            <th>id</th>
+            <th>name</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td></td>
+            <td>(0,1)</td>
+            <td>1</td>
+            <td>Alice</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>3</td>
+            <td>(0,2)</td>
+            <td>2</td>
+            <td>Bob</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td></td>
+            <td>(0,3)</td>
+            <td>3</td>
+            <td>Robert</td>
+        </tr>
+    </table>
+</div>
+
 #HSLIDE
 
 ## MVCC - delete
+
+<br>
+<div class="left" style="float:left; font-style: italic">
+    <ul style="list-style-type: none;">
+        <li>1. INSERT Alice</li>
+        <li>2. INSERT Bob</li>
+        <li>3. UPDATE Bob -> Robert</li>
+        <li style->4. DELETE Alice</li>
+    </ul>
+</div>
+<div class="right">
+    <table>
+        <tr>
+            <th>xmin</th>
+            <th>xmax</th>
+            <th>ctid</th>
+            <th>id</th>
+            <th>name</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>4</td>
+            <td>(0,1)</td>
+            <td>1</td>
+            <td>Alice</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>3</td>
+            <td>(0,2)</td>
+            <td>2</td>
+            <td>Bob</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td></td>
+            <td>(0,3)</td>
+            <td>3</td>
+            <td>Robert</td>
+        </tr>
+    </table>
+</div>
+
+#HSLIDE
+
+## MVCC - How repeatable read works?
 
 #HSLIDE
 
