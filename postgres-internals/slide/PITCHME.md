@@ -2,13 +2,13 @@
 
 Duc Nguyen
 
-#HSLIDE
+---
 
 ## PostgreSQL Internals
 
 <img src="postgres-internals/assets/PostgresQL_internals.png">
 
-#HSLIDE
+---
 
 ## Agenda
 
@@ -19,13 +19,13 @@ Duc Nguyen
 5.  Query explain: type of scan method
 6.  Index only scan
 
-#HSLIDE
+---
 
 ## Physical structure of databse
 
 <img src="postgres-internals/assets/PostgresQL_physical_structure.png">
 
-#HSLIDE
+---
 
 ## Database
 
@@ -42,7 +42,7 @@ addresses.addresses=# SELECT datname, oid
 
 <img src="postgres-internals/assets/database_base_folder.png">
 
-#HSLIDE
+---
 
 ## Table files
 
@@ -59,7 +59,7 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 
 <img src="postgres-internals/assets/table_files.png">
 
-#HSLIDE
+---
 
 ## Index
 
@@ -76,7 +76,7 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 
 <img src="postgres-internals/assets/index_files.png">
 
-#HSLIDE
+---
 
 ## Heap Table Structure
 
@@ -85,7 +85,7 @@ Page: a block of content (8KB default)
 
 Line pointers: 4-byte number address to each tuple
 
-#HSLIDE
+---
 
 ## TID - Tuple identifier: (block, offset)
 
@@ -95,19 +95,19 @@ Used to identify a tuple within a table.
 *   Offset: offset number of the line pointer that points to the tuples
     Example: (0, 2)
 
-#HSLIDE
+---
 
 ## Writing of a heap tuple. (1)
 
 <img src="postgres-internals/assets/Tuple_before_insert.png">
 
-#HSLIDE
+---
 
 ## Writing of a heap tuple. (2)
 
 <img src="postgres-internals/assets/Tuple_after_insert.png">
 
-#HSLIDE
+---
 
 ## Structure of a tuple
 
@@ -116,7 +116,7 @@ Used to identify a tuple within a table.
 * t_xmax: txid of the transaction that deleted this tuples. (t_xmax is 0 when tuple is ACTIVE)
 * c_ctid: tuple id itself
 
-#HSLIDE
+---
 
 ## MVCC - Tables & indexes
 
@@ -127,17 +127,17 @@ Used to identify a tuple within a table.
 -   Leaf node contain keys and pointers to the heap (ctid) |
 -   When table has new tuples, new tuple is added to index tree |
 
-#HSLIDE
+---
 
 ## MVCC - Tables & Indexes visualize
 
 I need a picture here to illutrate the heap table, primary key, secondary key
 
-#HSLIDE
+---
 
 ## Overral of Sequential scan and index scan
 
-#HSLIDE
+---
 
 ## MVCC - Multi-version Concurrency Control
 
@@ -145,18 +145,18 @@ Problem: someone reading data, while someone else is writing to it
 Reader might see inconistent piece of data
 MVCC: Allow reads & writes to happen concurrently
 
-#HSLIDE
+---
 ## ACID - Isolation level
 Read uncommitted
 Read committed
 Repeatable read
 Seriablizable 
 
-#HSLIDE
+---
 
 ## How can PostgresQL support MVCC?
 
-#HSLIDE
+---
 
 ## MVCC
 
@@ -170,7 +170,7 @@ CREATE TABLE users
 ```
 
 
-#HSLIDE
+---
 
 ## MVCC - insert
 <br>
@@ -206,7 +206,7 @@ CREATE TABLE users
     </table>
 </div>
 
-#HSLIDE
+---
 
 ## MVCC - update
 
@@ -251,7 +251,7 @@ CREATE TABLE users
     </table>
 </div>
 
-#HSLIDE
+---
 
 ## MVCC - delete
 
@@ -297,18 +297,18 @@ CREATE TABLE users
     </table>
 </div>
 
-#HSLIDE
+---
 
 ## MVCC - How repeatable read works?
 
-#HSLIDE
+---
 
 ## Table bloat
 
 Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 -> lots of UPDATEs will soon increase the tables's physical size
 
-#HSLIDE
+---
 
 ## Query explainer
 
@@ -319,45 +319,45 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 EXPLAIN ANALYSE SELECT * FROM users;
 ```
 
-#HSLIDE
+---
 
 ## Estimate Cost
 
 //TODO: add the table from Postgres explaining EXPLAIN
 
-#HSLIDE
+---
 
 ## Scan - Seq Scan
 
-#HSLIDE
+---
 
 ## Scan - Bitmap index scan
 
-#HSLIDE
+---
 
 ## Scan - Index scan
 
-#HSLIDE
+---
 
 ## Scan - Index only scan
 
-#HSLIDE
+---
 
 ## Joins - Nested Loop
 
-#HSLIDE
+---
 
 ## Joins - Merge
 
-#HSLIDE
+---
 
 ## Joins - Hash join
 
-#HSLIDE
+---
 
 ## Index only scan
 
-#HSLIDE
+---
 
 ## Reference
 
