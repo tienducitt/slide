@@ -13,8 +13,7 @@ Duc Nguyen
 ## Agenda
 
 1.  Physical structure of database
-2.  Table heap and Tuple structure
-3.  MVCC (Multi-version concurrent control)
+2.  Table heap structure
 4.  Tables & Indexes
 5.  Query explain: type of scan method
 6.  Index only scan
@@ -107,6 +106,46 @@ Used to identify a tuple within a table.
 
 <img src="postgres-internals/assets/Tuple_after_insert.png">
 
+--- 
+## Table tuples - examples
+
+<br>
+<div class="left" style="float:left; font-style: italic">
+    <ul style="list-style-type: none;">
+        <li>1. INSERT Alice</li>
+        <li>2. INSERT Bob</li>
+        <li>3. INSERT Robert</li>
+    </ul>
+</div>
+<div class="right">
+    <table>
+        <tr>
+            <th>ctid</th>
+            <th>id</th>
+            <th>name</th>
+        </tr>
+        <tr>
+            <td>(0,1)</td>
+            <td>1</td>
+            <td>Alice</td>
+        </tr>
+        <tr>
+            <td>(0,2)</td>
+            <td>2</td>
+            <td>Bob</td>
+        </tr>
+        <tr>
+            <td>(0,3)</td>
+            <td>3</td>
+            <td>Robert</td>
+        </tr>
+    </table>
+</div>
+
+--- 
+## Table
+<img src="postgres-internals/assets/heap-table-illutrate.jpg">
+
 +++
 
 ## Structure of a tuple
@@ -124,7 +163,9 @@ Problem: someone reading data, while someone else is writing to it
 Reader might see inconistent piece of data
 MVCC: Allow reads & writes to happen concurrently
 
-+++## ACID - Isolation level
++++
+
+## ACID - Isolation level
 
 Read uncommitted
 Read committed
@@ -240,7 +281,7 @@ CREATE TABLE users
         <li>1. INSERT Alice</li>
         <li>2. INSERT Bob</li>
         <li>3. UPDATE Bob -> Robert</li>
-        <li style->4. DELETE Alice</li>
+        <li style="color: green;">4. DELETE Alice</li>
     </ul>
 </div>
 <div class="right">
@@ -289,14 +330,20 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 
 ---
 
-## Tables & indexes
+## Indexes
 
--   Record data is stored in tuple |
--   Primary indexes sorted by primary key and have pointer (tcip) points to the tuple |
--   Indexes in PostgresQL is a b-tree |
+-   By default indexes in PostgresQL is a B-Tree
+
++++ 
+
+## B-Tree
+<img src="postgres-internals/assets/b-tree.png">
+
+--- Indexes
+
+-   <b>Primary indexes</b>: sorted by primary key and have pointer (tcip) points to the tuple |
 -   Root node & inner nodes: contains keys & pointers to lower level nodes |
 -   Leaf node contain keys and pointers to the heap (ctid) |
--   When table has new tuples, new tuple is added to index tree |
 
 ---
 
