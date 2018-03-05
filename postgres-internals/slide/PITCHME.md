@@ -107,7 +107,7 @@ Used to identify a tuple within a table.
 
 <img src="postgres-internals/assets/Tuple_after_insert.png">
 
----
++++
 
 ## Structure of a tuple
 
@@ -116,28 +116,7 @@ Used to identify a tuple within a table.
 * t_xmax: txid of the transaction that deleted this tuples. (t_xmax is 0 when tuple is ACTIVE)
 * c_ctid: tuple id itself
 
----
-
-## MVCC - Tables & indexes
-
--   Record data is stored in tuple |
--   Primary indexes sorted by primary key and have pointer (tcip) points to the tuple |
--   Indexes in PostgresQL is a b-tree |
--   Root node & inner nodes: contains keys & pointers to lower level nodes |
--   Leaf node contain keys and pointers to the heap (ctid) |
--   When table has new tuples, new tuple is added to index tree |
-
----
-
-## MVCC - Tables & Indexes visualize
-
-I need a picture here to illutrate the heap table, primary key, secondary key
-
----
-
-## Overral of Sequential scan and index scan
-
----
++++
 
 ## MVCC - Multi-version Concurrency Control
 
@@ -145,18 +124,18 @@ Problem: someone reading data, while someone else is writing to it
 Reader might see inconistent piece of data
 MVCC: Allow reads & writes to happen concurrently
 
----
-## ACID - Isolation level
++++## ACID - Isolation level
+
 Read uncommitted
 Read committed
 Repeatable read
 Seriablizable 
 
----
++++
 
 ## How can PostgresQL support MVCC?
 
----
++++
 
 ## MVCC
 
@@ -170,7 +149,7 @@ CREATE TABLE users
 ```
 
 
----
++++
 
 ## MVCC - insert
 <br>
@@ -206,7 +185,7 @@ CREATE TABLE users
     </table>
 </div>
 
----
++++
 
 ## MVCC - update
 
@@ -251,7 +230,7 @@ CREATE TABLE users
     </table>
 </div>
 
----
++++
 
 ## MVCC - delete
 
@@ -297,16 +276,37 @@ CREATE TABLE users
     </table>
 </div>
 
----
++++
 
 ## MVCC - How repeatable read works?
 
----
++++
 
 ## Table bloat
 
 Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 -> lots of UPDATEs will soon increase the tables's physical size
+
+---
+
+## Tables & indexes
+
+-   Record data is stored in tuple |
+-   Primary indexes sorted by primary key and have pointer (tcip) points to the tuple |
+-   Indexes in PostgresQL is a b-tree |
+-   Root node & inner nodes: contains keys & pointers to lower level nodes |
+-   Leaf node contain keys and pointers to the heap (ctid) |
+-   When table has new tuples, new tuple is added to index tree |
+
+---
+
+## Tables & Indexes visualize
+
+I need a picture here to illutrate the heap table, primary key, secondary key
+
+---
+
+## Overral of Sequential scan and index scan
 
 ---
 
