@@ -111,7 +111,7 @@ Used to identify a tuple within a table.
 
 ## Structure of a tuple
 
-<img src="postgres-internals/assets/tuple_structure">
+<img src="postgres-internals/assets/tuple_structure.png">
 * t_xmin: txid of the transaction that inserted this tuple
 * t_xmax: txid of the transaction that deleted this tuples. (t_xmax is 0 when tuple is ACTIVE)
 * c_ctid: tuple id itself
