@@ -347,7 +347,7 @@ Default indexes in PostgresQL is a **B-Tree**
 ---
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/index.png">
+<img src="postgres-internals/assets/table_and_index.png">
 
 ---
 
@@ -396,7 +396,7 @@ EXPLAIN SELECT * FROM location_trees ;
 +++
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/index.png">
+<img src="postgres-internals/assets/table_and_index.png">
 
 ---
 
@@ -434,7 +434,7 @@ WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
 +++
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/index.png">
+<img src="postgres-internals/assets/table_and_index.png">
 
 ---
 
@@ -455,7 +455,7 @@ WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
 +++
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/index.png">
+<img src="postgres-internals/assets/table_and_index.png">
 
 ---
 
@@ -473,7 +473,7 @@ EXPLAIN SELECT id FROM location_trees ORDER BY id LIMIT 1;
 +++
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/index.png">
+<img src="postgres-internals/assets/table_and_index.png">
 
 ---
 
@@ -500,7 +500,7 @@ LIMIT 1;
 +++
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/index.png">
+<img src="postgres-internals/assets/table_and_index.png">
 
 ---
 
@@ -525,7 +525,7 @@ AND active = true  LIMIT 1;
 +++
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/index.png">
+<img src="postgres-internals/assets/table_and_index.png">
 
 ---
 
@@ -553,7 +553,7 @@ LIMIT 1;
 +++
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/index.png">
+<img src="postgres-internals/assets/table_and_index.png">
 
 ---
 
