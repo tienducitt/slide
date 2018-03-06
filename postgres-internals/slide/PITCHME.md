@@ -1,4 +1,4 @@
----?image=postgres-internals/assets/postgres_background.jpg
+
 # Postgresql internals
 
 Duc Nguyen
