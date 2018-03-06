@@ -405,7 +405,9 @@ EXPLAIN SELECT *
 
 ---
 
-## Selectivity = count(unique value)/count(total value)
+## Selectivity
+
+### = total unique value / total value
 
 ---
 ## Scan - Bitmap index scan
