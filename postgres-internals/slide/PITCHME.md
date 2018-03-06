@@ -1,3 +1,4 @@
+---?image=postgres-internals/assets/postgres_background.jpg
 # Postgresql internals
 
 Duc Nguyen
@@ -14,13 +15,8 @@ Duc Nguyen
 
 1.  Physical structure of database
 2.  Table heap structure
-4.  Tables & Indexes
-5.  Query explain: type of scan method
-6.  Index only scan
-
----
-
-# 1. Physical structure of database
+3.  Tables & Indexes
+4.  Query explain result: scan type
 
 ---
 
@@ -81,10 +77,6 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 
 ---
 
-# 2. Heap table structure
-
----
-
 ## Heap Table Structure
 
 <img src="postgres-internals/assets/heap_table_file.png">
@@ -96,11 +88,8 @@ Line pointers: 4-byte number address to each tuple
 
 ## TID - Tuple identifier: (block, offset)
 
-Used to identify a tuple within a table.
-
 *   Block: block number of the page that contains the tuple
 *   Offset: offset number of the line pointer that points to the tuples
-    Example: (0, 2)
 
 +++
 
@@ -358,14 +347,15 @@ Default indexes in PostgresQL is a **B-Tree**
 ---
 
 ## Tables & Indexes visualize
-<img src="postgres-internals/assets/table_and_index.png">
+<img src="postgres-internals/assets/index.png">
 ---
 
 ## Query explainer
 
 *   Displays the execution plan that the PostgreSQL planner generates for the supplied statement |
-*   How the table(s) will be scaned - by plain sequential scan / index scan |
+*   How the table(s) will be scaned - by plain sequential scan / index scan/... |
 *   What join algoritms will be used (in case of multiple tables are references) |
+*   ... |
 
 --- 
 ## Query explain - example
@@ -381,7 +371,14 @@ Seq Scan on location_trees  (cost=0.00..68.87 rows=1787 width=193)
 (3 rows)
 ```
 
-*Cost: cost to seek 1 page (8KB) from hard disk*
+*Cost: cost to fetch 1 page (8 KB) from hard disk*
+
+---
+## Scan types
+* Seq scan  |
+* Bitmap index scan |
+* Index scan    | 
+* Index only scan   |
 
 ---
 
@@ -408,6 +405,9 @@ EXPLAIN SELECT *
 
 ---
 
+## Selectivity = count(unique value)/count(total value)
+
+---
 ## Scan - Bitmap index scan
 
 ```sql
@@ -450,7 +450,7 @@ EXPLAIN SELECT id FROM location_trees ORDER BY id LIMIT 1;
    (cost=0.28..275.08 rows=1787 width=16)
 (2 rows)
 ```
-
+**In PostgresQL, it's not always can produce a index only scan**
 ---
 
 ## Scan with order by id
@@ -529,9 +529,8 @@ LIMIT 1;
 ## Reference
 
 *   PostgreSQL Documentation
-*   The Internals of PostgreSQL
-*   Grokking: PostgreSQL Internals workshop
-
+*   [The Internals of PostgreSQL](https://github.com/gitpitch/gitpitch/wiki/Slide-Markdown)
+*   [Grokking Vietnam](https://www.facebook.com/grokking.vietnam/)
 
 --- 
 # Thank you for listening
