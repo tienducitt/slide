@@ -348,6 +348,7 @@ Default indexes in PostgresQL is a **B-Tree**
 
 ## Tables & Indexes visualize
 <img src="postgres-internals/assets/index.png">
+
 ---
 
 ## Query explainer
@@ -392,6 +393,11 @@ EXPLAIN SELECT * FROM location_trees ;
 (3 rows)
 ```
 
++++
+
+## Tables & Indexes visualize
+<img src="postgres-internals/assets/index.png">
+
 ---
 
 ## When a query can use index?
@@ -425,6 +431,11 @@ WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
          Index Cond: (parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f'::uuid)
 ```
 
++++
+
+## Tables & Indexes visualize
+<img src="postgres-internals/assets/index.png">
+
 ---
 
 ## Scan - Index scan
@@ -440,6 +451,12 @@ WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f';
    Index Cond: (parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f'::uuid)
 (2 rows)
 ```
+
++++
+
+## Tables & Indexes visualize
+<img src="postgres-internals/assets/index.png">
+
 ---
 
 ## Scan - Index only scan
@@ -452,7 +469,12 @@ EXPLAIN SELECT id FROM location_trees ORDER BY id LIMIT 1;
    (cost=0.28..275.08 rows=1787 width=16)
 (2 rows)
 ```
-**In PostgresQL, it's not always can produce a index only scan**
+
++++
+
+## Tables & Indexes visualize
+<img src="postgres-internals/assets/index.png">
+
 ---
 
 ## Scan with order by id
@@ -475,6 +497,11 @@ LIMIT 1;
 (6 rows)
 ```
 
++++
+
+## Tables & Indexes visualize
+<img src="postgres-internals/assets/index.png">
+
 ---
 
 ## Scan without order
@@ -494,6 +521,12 @@ AND active = true  LIMIT 1;
  Execution time: 34.331 ms
 (6 rows)
 ```
+
++++
+
+## Tables & Indexes visualize
+<img src="postgres-internals/assets/index.png">
+
 ---
 
 ## Scan with the same other with index
@@ -516,6 +549,12 @@ LIMIT 1;
  Execution time: 0.616 ms
 (6 rows)
 ```
+
++++
+
+## Tables & Indexes visualize
+<img src="postgres-internals/assets/index.png">
+
 ---
 
 ## What's next?
