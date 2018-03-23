@@ -1,0 +1,2 @@
+theme-override : postgres-internals/scan-type/PITCHME.css
+slide-number: true

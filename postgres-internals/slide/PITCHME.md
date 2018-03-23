@@ -301,11 +301,19 @@ MVCC: Allow reads & writes to happen concurrently
 </div>
 
 +++
+## 
+## VACUUM
+
++++
 
 ## Table bloat
 
 Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 -> lots of UPDATEs will soon increase the tables's physical size
+
++++
+## Index only scan & visibility map
+
 ---
 ## Indexes
 
