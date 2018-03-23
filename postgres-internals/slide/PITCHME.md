@@ -104,6 +104,10 @@ Line pointers: 4-byte number address to each tuple
 *   Offset: offset number of the line pointer that points to the tuples
 
 --- 
+## Table
+<img src="postgres-internals/assets/heap_table_illutrate.jpg">
+
+--- 
 ## Table tuples - examples
 
 <br>
@@ -181,7 +185,6 @@ CREATE TABLE users
     CONSTRAINT users_name_unique UNIQUE (username)
 );
 ```
-
 
 +++
 
@@ -320,13 +323,6 @@ CREATE TABLE users
 
 Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 -> lots of UPDATEs will soon increase the tables's physical size
-
----
-
---- 
-## Table
-<img src="postgres-internals/assets/heap_table_illutrate.jpg">
-
 ---
 ## Indexes
 
