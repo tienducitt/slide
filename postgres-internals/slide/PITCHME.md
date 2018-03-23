@@ -237,7 +237,7 @@ MVCC: Allow reads & writes to happen concurrently
             <td>1</td>
             <td>Alice</td>
         </tr>
-        <tr style="color: #FF6B6B">
+        <tr style="background: #FF6B6B">
             <td>2</td>
             <td>3</td>
             <td>(0,2)</td>
@@ -283,7 +283,7 @@ MVCC: Allow reads & writes to happen concurrently
             <td>1</td>
             <td>Alice</td>
         </tr>
-        <tr style="background: #BAA898;">
+        <tr style="color: #FF6B6B;">
             <td>2</td>
             <td>3</td>
             <td>(0,2)</td>
