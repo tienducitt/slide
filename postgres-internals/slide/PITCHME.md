@@ -164,27 +164,14 @@ MVCC: Allow reads & writes to happen concurrently
 
 ## ACID - Isolation level
 
-Read uncommitted
-Read committed
-Repeatable read
-Seriablizable 
+- Read uncommitted
+- Read committed
+- Repeatable read
+- Seriablizable 
 
 +++
 
 ## How can PostgresQL support MVCC?
-
-+++
-
-## MVCC
-
-```sql
-CREATE TABLE users
-(id INTEGER
-    CONSTRAINT location_trees_pkey PRIMARY KEY,
- name VARCHAR(100)
-    CONSTRAINT users_name_unique UNIQUE (username)
-);
-```
 
 +++
 
@@ -205,14 +192,14 @@ CREATE TABLE users
             <th>id</th>
             <th>name</th>
         </tr>
-        <tr>
+        <tr style="background: #9AE19D;">
             <td>1</td>
             <td></td>
             <td>(0,1)</td>
             <td>1</td>
             <td>Alice</td>
         </tr>
-        <tr>
+        <tr style="background: #9AE19D;">
             <td>2</td>
             <td></td>
             <td>(0,2)</td>
@@ -250,14 +237,14 @@ CREATE TABLE users
             <td>1</td>
             <td>Alice</td>
         </tr>
-        <tr>
+        <tr style="color: #FF6B6B">
             <td>2</td>
             <td>3</td>
             <td>(0,2)</td>
             <td>2</td>
             <td>Bob</td>
         </tr>
-        <tr>
+        <tr style="background: #9AE19D;">
             <td>3</td>
             <td></td>
             <td>(0,3)</td>
@@ -289,14 +276,14 @@ CREATE TABLE users
             <th>id</th>
             <th>name</th>
         </tr>
-        <tr>
+        <tr style="background: #FF6B6B;">
             <td>1</td>
             <td>4</td>
             <td>(0,1)</td>
             <td>1</td>
             <td>Alice</td>
         </tr>
-        <tr>
+        <tr style="background: #BAA898;">
             <td>2</td>
             <td>3</td>
             <td>(0,2)</td>
@@ -312,10 +299,6 @@ CREATE TABLE users
         </tr>
     </table>
 </div>
-
-+++
-
-## MVCC - How repeatable read works?
 
 +++
 
