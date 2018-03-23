@@ -26,7 +26,7 @@ Duc Nguyen
 
 ---
 
-## Database
+## Database directory
 
 ```sql
 addresses.addresses=# SELECT datname, oid
@@ -60,7 +60,7 @@ addresses.addresses=# SELECT relname, oid, relfilenode
 
 ---
 
-## Index
+## Indexes
 
 ```sql
 addresses.addresses=# SELECT relname, oid, relfilenode
@@ -84,13 +84,6 @@ Page: a block of content (8KB default)
 
 Line pointers: 4-byte number address to each tuple
 
----
-
-## TID - Tuple identifier: (block, offset)
-
-*   Block: block number of the page that contains the tuple
-*   Offset: offset number of the line pointer that points to the tuples
-
 +++
 
 ## Writing of a heap tuple. (1)
@@ -102,6 +95,13 @@ Line pointers: 4-byte number address to each tuple
 ## Writing of a heap tuple. (2)
 
 <img src="postgres-internals/assets/Tuple_after_insert.png">
+
+---
+
+## TID - Tuple identifier: (block, offset)
+
+*   Block: block number of the page that contains the tuple
+*   Offset: offset number of the line pointer that points to the tuples
 
 --- 
 ## Table tuples - examples
@@ -138,10 +138,6 @@ Line pointers: 4-byte number address to each tuple
         </tr>
     </table>
 </div>
-
---- 
-## Table
-<img src="postgres-internals/assets/heap_table_illutrate.jpg">
 
 +++
 
@@ -327,6 +323,11 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 
 ---
 
+--- 
+## Table
+<img src="postgres-internals/assets/heap_table_illutrate.jpg">
+
+---
 ## Indexes
 
 Default indexes in PostgresQL is a **B-Tree**

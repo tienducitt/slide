@@ -4,3 +4,5 @@
 /java-collection-example/nbproject/private/
 /java-collection-example/build/
 /.vscode
+
+.DS_Store
