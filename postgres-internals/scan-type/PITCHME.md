@@ -1,4 +1,7 @@
-# Understand POSTGRESQL Scan type
+
+# POSTGRESQL Scan type IN DEPTH
+
+Duc Nguyen
 
 ---
 ## Agenda
@@ -13,12 +16,15 @@
 
 ---
 
-## Query explainer
+## Problem
+### Input
+- Heap table
+- Index (optional)
+- Query
+- Cost constants: seq_page_cost, rand_page_cost, cpu_tuple_cost,...
 
-*   Displays the execution plan that the PostgreSQL planner generates for the supplied statement |
-*   How the table(s) will be scaned - by plain sequential scan / index scan/... |
-*   What join algoritms will be used (in case of multiple tables are references) |
-*   ... |
+### Output
+Find the fastest way to solve the query!
 
 --- 
 ## Query explain - example
@@ -57,7 +63,6 @@ EXPLAIN SELECT * FROM location_trees ;
 
 ## Tables & Indexes visualize
 <img src="postgres-internals/assets/table_and_index.png">
-
 
 ---
 
@@ -146,4 +151,31 @@ WHERE parent_id = 'a64fe8f7-ae02-41d6-81b2-8c2a83fdb48f' AND lazada_id='m';
 
 ## Tables & Indexes visualize
 <img src="postgres-internals/assets/table_and_index.png">
+---
+
+## Scan - Index only scan
+```sql
+EXPLAIN SELECT id FROM location_trees ORDER BY id LIMIT 1;
+                 QUERY PLAN
+---------------------------------------------
+ Limit  (cost=0.28..0.43 rows=1 width=16)
+   ->  Index Only Scan using location_trees_pkey on location_trees  
+   (cost=0.28..275.08 rows=1787 width=16)
+(2 rows)
+```
+
++++
+
+## Tables & Indexes visualize
+<img src="postgres-internals/assets/table_and_index.png">
+
+---
+
+## Reference
+
+*   PostgreSQL Documentation
+*   [The Internals of PostgreSQL](https://github.com/gitpitch/gitpitch/wiki/Slide-Markdown)
+*   [dba.stackexchange.com](https://dba.stackexchange.com/questions/119386/understanding-bitmap-heap-scan-and-bitmap-index-scan?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
+---
+Thanks for listening
 ---
