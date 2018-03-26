@@ -308,7 +308,7 @@ MVCC: Allow reads & writes to happen concurrently
     <ul style="list-style-type: none;">
         <li>1. INSERT Alice</li>
         <li>2. INSERT Bob</li>
-        <li style="color: green;">3. SELECT</li>
+        <li style="color: green;">3. SELECT ...</li>
     </ul>
 </div>
 <div class="right">
@@ -345,8 +345,8 @@ MVCC: Allow reads & writes to happen concurrently
     <ul style="list-style-type: none;">
         <li>1. INSERT Alice</li>
         <li>2. INSERT Bob</li>
-        <li>3. SELECT...</li>
-        <li>4. UPDATE Alice -> Robert </li>
+        <li style="color: green">3. SELECT ...</li>
+        <li style="color: green">4. UPDATE Alice -> Robert </li>
     </ul>
 </div>
 <div class="right">
