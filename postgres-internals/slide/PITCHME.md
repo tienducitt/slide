@@ -301,8 +301,86 @@ MVCC: Allow reads & writes to happen concurrently
 </div>
 
 +++
-## 
-## VACUUM
+## MVCC - example
+
+<br>
+<div class="left" style="float:left; font-style: italic">
+    <ul style="list-style-type: none;">
+        <li>1. INSERT Alice</li>
+        <li>2. INSERT Bob</li>
+        <li style="color: green;">3. SELECT</li>
+    </ul>
+</div>
+<div class="right">
+    <table>
+        <tr>
+            <th>xmin</th>
+            <th>xmax</th>
+            <th>ctid</th>
+            <th>id</th>
+            <th>name</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td></td>
+            <td>(0,1)</td>
+            <td>1</td>
+            <td>Alice</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td></td>
+            <td>(0,2)</td>
+            <td>2</td>
+            <td>Bob</td>
+        </tr>
+    </table>
+</div>
+
++++
+## MVCC - example
+
+<br>
+<div class="left" style="float:left; font-style: italic">
+    <ul style="list-style-type: none;">
+        <li>1. INSERT Alice</li>
+        <li>2. INSERT Bob</li>
+        <li>3. SELECT...</li>
+        <li>4. UPDATE Alice -> Robert </li>
+    </ul>
+</div>
+<div class="right">
+    <table>
+        <tr>
+            <th>xmin</th>
+            <th>xmax</th>
+            <th>ctid</th>
+            <th>id</th>
+            <th>name</th>
+        </tr>
+        <tr style="background: #FF6B6B;">
+            <td >1</td>
+            <td>4</td>
+            <td>(0,1)</td>
+            <td>1</td>
+            <td>Alice</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>0</td>
+            <td>(0,2)</td>
+            <td>2</td>
+            <td>Bob</td>
+        </tr>
+        <tr style="background: #9AE19D;">
+            <td>4</td>
+            <td></td>
+            <td>(0,3)</td>
+            <td>2</td>
+            <td>Bob</td>
+        </tr>
+    </table>
+</div>
 
 +++
 
@@ -312,7 +390,17 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 -> lots of UPDATEs will soon increase the tables's physical size
 
 +++
+
+## VACUUM
+
++++
+
 ## Index only scan & visibility map
+
++++
+
+## Hot tuple
+
 
 ---
 ## Indexes
