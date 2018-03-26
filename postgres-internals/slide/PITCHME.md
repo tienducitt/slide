@@ -393,6 +393,13 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 
 ## VACUUM
 
++++ 
+## Index update
+* Index keep the ctid of the tuple |
+* Update a tuple will create a new tuple, mark old tuple as deleted |
+* -> All the index trees need to be updated |
+* --> It will be not good in case that you have ** many ** indexes, and many ** UPDATE ** |
+
 +++
 
 ## Index only scan & visibility map
@@ -400,7 +407,6 @@ Because each UPDATE creates a new tuple (and marks old tuples as deleted)
 +++
 
 ## Hot tuple
-
 
 ---
 ## Indexes
