@@ -1,7 +1,7 @@
 
 # Understand MySQL InnoDB MVCC
 
-- Rey -
+Rey
 
 ---
 ## Agenda
@@ -12,7 +12,7 @@
 4. Secondary Index
 
 ---
-## 1. MVCC
+# 1. MVCC
 
 ---
 ### Concurrency
@@ -22,16 +22,16 @@ A transaction can only see the `valid` data according to the current transaction
 
 ---
 ## MVC Example
-<img src="innodb-mvcc/assets/innodb_mvcc_example.jpg">
+<img src="innodb-mvcc/assets/innodb_mvcc_example.jpg" style="width: 90%">
 
 ---
-## Multi-Version Concurrent Controll (MVCC)
+## Multi-Version Concurrency Controll (MVCC)
 
-- A technique to support concurrency and isolation implemented in MySQL, PostgresQL, Oracle,...
-- Keeping multi versions of the same data, each write creates new version of data item while retaining the old version.
+* A technique to support concurrency and isolation implemented in MySQL, PostgresQL, Oracle,... |
+* Keeping multi versions of the same data, each write creates new version of data item while retaining the old version. |
 
 ---
-2. InnoDB General Structure
+# 2. InnoDB General Structure
 
 ---
 ## General structure
@@ -51,19 +51,23 @@ Note:
 ---
 ## Page structure
 
+|Name|
+|---|
 |FIL Header (38)|
 |Page Header (56)|
 |Infinimum & Supermum Records|
-|*User Records*|
+|**User Records**|
 |Free Space|
 |Page Dictionary|
 |FIL Trailer|
 
 ---
 ## Row structure
+|Name|
+|---|
 |Field start header|
 |Extra header (6 bytes)|
-|*Field contents*|
+|**Field contents**|
 
 +++
 ## Field start header
@@ -95,14 +99,15 @@ Note:
 ## Record visualize:
 <img src="innodb-mvcc/assets/row_visualize.png">
 
+---
 ## MVCC
-- Insert: insert new row
-- Update: copy current row to rollback segment + update user fields + tx_id + rollback pointer
-- Delete: treated as an update where delete_flag bit in row header set as 1.
+* **Insert**: insert new row |
+* **Update**: copy current row to rollback segment + update user fields + tx_id + rollback pointer |
+* **Delete**: treated as an update where delete_flag bit in row header set as 1. |
 
 ---
 ## MVCC Insert (1)
-<img src="innodb-mvcc/assets/mvcc_insert_1.png">
+<img src="innodb-mvcc/assets/mvcc_insert_1.png" style="width: 100%;">
 
 ---
 ## MVCC Insert (2)
@@ -125,22 +130,26 @@ Note:
 
 ---
 ## Secondary index page
-- Secondary index is a B-Tree index ordered by index fields, primary key is attached to it
-- No hidden fields, just index fields + primary key
+* Secondary index is a B-Tree index ordered by index fields, primary key is attached to it |
+*-* No hidden fields, just index fields + primary key |
 
 ---
 ## Secondary index:
-- Insert: insert new index record.
-- Update: mark current record as deleted, insert new one.
-- Delete: mark as deleted.
+* **Insert**: insert new index record. |
+* **Update**: mark current record as deleted, insert new one. |
+* **Delete**: mark as deleted. |
 
-## There are no visibility information in secondary index records
+---
+## There are no visibility information in secondary index records !!!
 
-+++
+---
 ## Page Header
-- PAGE_MAX_TRX_ID: the highest ID of a transaction which might have changed a record on the page (only set for secondary indexes)
-- If PAGE_MAX_TRX_ID of a page is smaller than `up_limit_id`, all index records in that page is visible for all transaction.
-- Or else, InnoDB need to check for visibility in cluster index.
+* PAGE_MAX_TRX_ID: the highest ID of a transaction which might have changed a record on the page (only set for secondary indexes) |
+* If PAGE_MAX_TRX_ID of a page is smaller than `up_limit_id`, all index records in that page is visible for all transaction. |
+* Or else, InnoDB need to check for visibility in cluster index. |
+
+---
+## DEMO
 
 ---
 ## Reference:
