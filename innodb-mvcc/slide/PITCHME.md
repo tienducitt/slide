@@ -21,7 +21,6 @@ Multi transaction can read/write at the same time.
 A transaction can only see the **valid** data according to the current transaction isolation level.
 
 ---
-## MVC Example
 <img src="innodb-mvcc/assets/innodb_mvcc_example.jpg" style="height: 90%">
 
 ---
