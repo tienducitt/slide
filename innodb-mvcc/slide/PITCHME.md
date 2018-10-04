@@ -30,7 +30,7 @@ A transaction can only see the **valid** data according to the current transacti
 * Keeping multi versions of the same data, each write creates new version of data item while retaining the old version. |
 
 ---
-# 2. InnoDB General Structure
+## 2. InnoDB General Structure
 
 ---
 ## General structure
@@ -61,7 +61,7 @@ Note:
 |FIL Trailer|
 
 ---
-## Row structure
+## Record structure
 |Name|
 |---|
 |Field start header|
@@ -78,7 +78,7 @@ Note:
 |Name|Size|Description|
 |---|---|---|
 |n_owned|4 bits|num records owned by this record in page dictionary|
-|*delete-flag*|1 bit| 1 if record is deleted|
+|**delete-flag**|1 bit| 1 if record is deleted|
 |n_fields|10 bits|num of fields|
 |1byte_off_flag|1 bit| 1 if each Field Start Offset is 1 byte long|
 |next|16 bits| pointer to the next record|
@@ -100,9 +100,9 @@ Note:
 
 ---
 ## MVCC
-* **Insert**: insert new row |
-* **Update**: copy current row to rollback segment + update user fields + tx_id + rollback pointer |
-* **Delete**: treated as an update where delete_flag bit in row header set as 1. |
+* Insert: insert new row |
+* Update: copy current row to rollback segment + update user fields + tx_id + rollback pointer |
+* Delete: treated as an update where delete_flag bit in row header set as 1. |
 
 ---
 ## MVCC Insert (1)
@@ -134,9 +134,9 @@ Note:
 
 ---
 ## Secondary index:
-* **Insert**: insert new index record. |
-* **Update**: mark current record as deleted, insert new one. |
-* **Delete**: mark as deleted. |
+* Insert: insert new index record. |
+* Update: mark current record as deleted, insert new one. |
+* Delete: mark as deleted. |
 
 ---
 ## There are no visibility information in secondary index records !!!
