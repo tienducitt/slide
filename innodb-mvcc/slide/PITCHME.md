@@ -106,23 +106,23 @@ Note:
 
 ---
 ## MVCC Insert (1)
-<img src="innodb-mvcc/assets/mvcc_insert_1.png" style="width: 100%;">
+<img src="innodb-mvcc/assets/mvcc_insert_1.png" style="width: 90%;">
 
 ---
 ## MVCC Insert (2)
-<img src="innodb-mvcc/assets/mvcc_insert_2.png">
+<img src="innodb-mvcc/assets/mvcc_insert_2.png" style="width: 90%;">
 
 ---
 ## MVCC update (1)
-<img src="innodb-mvcc/assets/mvcc_update_1.png">
+<img src="innodb-mvcc/assets/mvcc_update_1.png" style="width: 90%;">
 
 ---
 ## MVCC update (2)
-<img src="innodb-mvcc/assets/mvcc_update_2.png">
+<img src="innodb-mvcc/assets/mvcc_update_2.png" style="width: 90%;">
 
 ---
 ## MVCC Delete
-<img src="innodb-mvcc/assets/mvcc_delete.png">
+<img src="innodb-mvcc/assets/mvcc_delete.png" style="width: 90%;">
 
 ---
 ## Const scan type
