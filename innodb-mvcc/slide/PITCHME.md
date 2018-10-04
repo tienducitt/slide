@@ -1,13 +1,13 @@
 
 # Understand MySQL InnoDB MVCC
 
-Rey
+Duc Nguyen
 
 ---
 ## Agenda
 
 1. What is MVCC
-2. InnoDB General structure
+2. InnoDB general structure
 3. Clustered Index
 4. Secondary Index
 
@@ -18,11 +18,11 @@ Rey
 ### Concurrency
 Multi transaction can read/write at the same time.
 ### Transaction Isolation
-A transaction can only see the `valid` data according to the current transaction isolation level.
+A transaction can only see the **valid** data according to the current transaction isolation level.
 
 ---
 ## MVC Example
-<img src="innodb-mvcc/assets/innodb_mvcc_example.jpg" style="width: 90%">
+<img src="innodb-mvcc/assets/innodb_mvcc_example.jpg" style="height: 90%">
 
 ---
 ## Multi-Version Concurrency Controll (MVCC)
@@ -146,7 +146,7 @@ Note:
 ## Page Header
 * PAGE_MAX_TRX_ID: the highest ID of a transaction which might have changed a record on the page (only set for secondary indexes) |
 * If PAGE_MAX_TRX_ID of a page is smaller than `up_limit_id`, all index records in that page is visible for all transaction. |
-* Or else, InnoDB need to check for visibility in cluster index. |
+* Or else, InnoDB need to check for visibility in clustered index. |
 
 ---
 ## DEMO
