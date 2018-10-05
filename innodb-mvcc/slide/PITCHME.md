@@ -96,12 +96,12 @@ Note:
 ---
 ## Clustered index row structure
 There are some system columns:
-- `transaction_id`: the transaction id that insert this record
-- `rollback_pointer`: pointer to the previous record version in rollback segment
-- `rowID`: in case there are no primary key and also no unique key, rowId will be used behide the scense.
+- **transaction_id**: the transaction id that insert this record
+- **rollback_pointer**: pointer to the previous record version in rollback segment
+- **rowID**: in case there are no primary key and also no unique key, rowId will be used behide the scense.
 
 +++
-## Record visualize:
+## Record visualize
 <img src="innodb-mvcc/assets/row_visualize.png">
 
 +++
