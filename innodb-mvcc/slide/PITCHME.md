@@ -86,17 +86,26 @@ Note:
 
 ---
 ## Clustered index
-- Table itself is a B-Tree index ordered by primary key, user columns is attached to it.
+- Table itself is a B-Tree index ordered by primary key, user columns is attached to it |
+- Root node & inner nodes: contains keys & pointers to lower level nodes |
+- Leaf node contain primary keys and other columns |
+
++++
+<img src="innodb-mvcc/assets/innodb_btree.png">
 
 ---
 ## Clustered index row structure
+There are some system columns:
 - `transaction_id`: the transaction id that insert this record
 - `rollback_pointer`: pointer to the previous record version in rollback segment
 - `rowID`: in case there are no primary key and also no unique key, rowId will be used behide the scense.
 
----
++++
 ## Record visualize:
 <img src="innodb-mvcc/assets/row_visualize.png">
+
++++
+<img src="innodb-mvcc/assets/innodb_index_record_roll_sm.png">
 
 ---
 ## MVCC
@@ -125,12 +134,9 @@ Note:
 <img src="innodb-mvcc/assets/mvcc_delete.png" style="width: 90%;">
 
 ---
-## Const scan type
-
----
 ## Secondary index page
 * Secondary index is a B-Tree index ordered by index fields, primary key is attached to it |
-*-* No hidden fields, just index fields + primary key |
+* No hidden fields, just index fields + primary key |
 
 ---
 ## Secondary index:
@@ -139,16 +145,27 @@ Note:
 * Delete: mark as deleted. |
 
 ---
+## General picture
+<img src="innodb-mvcc/assets/innodb_general_picture.png">
+
+---
 ## There are no visibility information in secondary index records !!!
 
 ---
 ## Page Header
 * PAGE_MAX_TRX_ID: the highest ID of a transaction which might have changed a record on the page (only set for secondary indexes) |
-* If PAGE_MAX_TRX_ID of a page is smaller than `up_limit_id`, all index records in that page is visible for all transaction. |
+* If PAGE_MAX_TRX_ID of a page is smaller than "up_limit_id", all index records in that page is visible for all transaction. |
 * Or else, InnoDB need to check for visibility in clustered index. |
 
 ---
-## DEMO
+## Take a way:
+- Everything in InnoDB is a B-tree index: clustered index, secondary index keep primary key. |
+- Cluster index contains 2 hidden columns: tx_id, rollback_pointer and 1 bit in record header for delete mark. |
+- Secondary index doesn't have visibility infomation at record level, it just have page level (by PAGE_MAX_TRX_ID) |
+- Index only scan / Covering index is not really index "only scan" |
+
+---
+## DEMO: MVCC & Isolation level
 
 ---
 ## Reference:
