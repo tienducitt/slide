@@ -169,10 +169,10 @@ There are some system columns:
 
 ---
 ## Reference:
-- MySQL Documentation
-- MySQL Internals Manual
-- Percona
-- Blog.jcole.us
+- [MySQL Documentation] (https://dev.mysql.com/doc/refman/8.0/en/innodb-introduction.html)
+- [MySQL Internals Manual] (https://dev.mysql.com/doc/internals/en/)
+- [Blog.jcole.us] (https://blog.jcole.us/innodb/)
+- [Percona] (https://www.percona.com/blog/)
 
 ---
 ## Thank you for listening!
