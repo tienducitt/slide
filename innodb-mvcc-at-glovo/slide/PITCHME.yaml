@@ -1,0 +1,2 @@
+theme-override : innodb-mvcc/slide/PITCHME.css
+slide-number: true
