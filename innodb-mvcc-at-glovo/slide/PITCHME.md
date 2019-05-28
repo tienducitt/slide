@@ -76,6 +76,7 @@ Note:
 +++ 
 ### Page Header
 |Name|Size|Meaning|
+|---|---|---|
 | PAGE_N_DIR_SLOTS | 2 | number of directory slots in the Page Directory part; initial value = 2 |
 | PAGE_HEAP_TOP | 2 | record pointer to first record in heap |
 | PAGE_N_HEAP | 2 | number of heap records; initial value = 2 |
