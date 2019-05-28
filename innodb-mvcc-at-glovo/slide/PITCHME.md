@@ -1,5 +1,5 @@
 
-# MySQL InnoDB MVCC 101
+# MySQL InnoDB Internal 101
 
 Duc Nguyen (Rey)
 
@@ -7,13 +7,10 @@ Duc Nguyen (Rey)
 ## Agenda
 
 1. What is MVCC
-2. InnoDB general structure
+2. InnoDB General On Disk Format
 3. Clustered Index & Secondary Index
-4. Insert/Update/Delete
-5. Demo
-
----
-### First example
+4. MVCC & Insert/Update/Delete
+5. Bonus
 
 ---
 # 1. MVCC
@@ -21,28 +18,36 @@ Duc Nguyen (Rey)
 ---
 ### Concurrency
 Multi transactions can read/write at the same time.
-### Transaction Isolation
+### Transaction isolation levels
 A transaction can only see the **valid** data according to the current transaction isolation level.
 
 +++
 ### Transaction Isolation levels
-* Uncommitted read
-* Committed read
-* Repeatable read
-* Serializable
+* READ UNCOMMITTED: can see uncommitted data |
+* READ COMMITTED: can see last committed data |
+* Repeatable read: read commited data at it was on start of transaction |
+* Serializable: read block write, write block read |
 
 ---
-## Multi-Version Concurrency Controll (MVCC)
+### Multi-Version Concurrency Controll (MVCC)
 
-* A technique to support concurrency and isolation implemented in MySQL, PostgresQL, Oracle,... |
-* By keeping multi versions of the same data, each write creates new version of data item while retaining the old version. |
-
----
-## 2. InnoDB General Structure
+* A technique to support concurrency and isolation implemented in many RDBMS: MySQL, PostgresQL, Oracle,... |
+* By keeping information about old versions of changed rows, each write creates new version of data item while retaining the old version. |
 
 ---
-## General structure
+## 2. InnoDB General On Disk Format
+
+Note: 
+- In order to understand the MVCC, we need to know how MySQL store data on disk, it is the core design that effect other parts of MySQL.
+- In-memory state is a reflect/cache version of on disk data.
+
+---
+### General structure
 <img src="innodb-mvcc/assets/innodb_general_structure.png">
+Note:
+- .frm files contain metadata about the table structure.
+- .idb files contain the table data itself
+- Occording to innodb_file_per_tables flags, MySQL can use 1 single System table space for all the table, or use different table spaces for each table.
 
 ---
 ## Tablespace structure
@@ -68,8 +73,15 @@ Note:
 |Page Dictionary|
 |FIL Trailer|
 
-Note:
-- TODO
++++ 
+### Page Header
+TODO: list page headers, highlight PAGE_MAX_TRX_ID
+
++++
+## Page Header
+* PAGE_MAX_TRX_ID: the highest ID of a transaction which might have changed a record on the page (only set for secondary indexes) |
+* If PAGE_MAX_TRX_ID of a page is smaller than "up_limit_id", all index records in that page is visible for all transaction. |
+* Or else, InnoDB need to check for visibility in clustered index. |
 
 ---
 ## Record structure
@@ -77,11 +89,12 @@ Note:
 |---|
 |Field start header|
 |Extra header (6 bytes)|
-|**Field contents**|
+|**Field data**|
 
 Note:
 - TODO
 - Record structure is different between secondary index & primary index.
+- Consider building an image of the B-Tree
 
 +++
 ## Field start header
@@ -107,6 +120,8 @@ Note:
 - Root node & inner nodes: contains keys & pointers to lower level nodes |
 - Leaf node contain primary keys and other columns |
 
+TODO: draw a illustration about primary index, non-leaf-node page, leaf-node pages.
+
 +++
 <img src="innodb-mvcc/assets/innodb_btree.png">
 
@@ -128,6 +143,10 @@ There are some system columns:
 ## Secondary index page
 * Secondary index is a B-Tree ordered by index fields, primary key is attached to it |
 * No hidden fields, just index fields + primary key |
+
++++
+TODO: draw an image
+
 ---
 ## General picture
 <img src="innodb-mvcc/assets/innodb_general_picture.png">
@@ -168,30 +187,29 @@ Note:
 * Delete: mark as deleted. |
 
 ---
-## There are no visibility information in secondary index records !!! How MySQL make sure index data is visible for the current transaction?
-
-+++
-- MySQL covering index (it shown as `Using index` in extra column when you explain the where)
-- PostgresQL `index-only scan`
-
-+++
-## Page Header
-* PAGE_MAX_TRX_ID: the highest ID of a transaction which might have changed a record on the page (only set for secondary indexes) |
-* If PAGE_MAX_TRX_ID of a page is smaller than "up_limit_id", all index records in that page is visible for all transaction. |
-* Or else, InnoDB need to check for visibility in clustered index. |
+### 5. Bonus
 
 ---
-## DEMO: MVCC & Isolation level
+### Bonus 1: super long transaction & isolation level.
+TODO:
+- Add live map postmorten example
+- Run example 2
 
-Note:
-- TODO
+--- 
+### Bonus 2:
+- MySQL index covering (extra: Using index in explain query result)
+- PostgresQL index-only-scan
+
++++
+### There are no visibility information in secondary index records !!! How MySQL make sure index data is visible for the current transaction?
 
 ---
 ## Take a way:
 - Data store in MySQL as a B-tree: table as a clustered index, secondary index keep primary key. |
-- Cluster index contains 2 hidden columns: tx_id, rollback_pointer and 1 bit in record header for delete mark. |
+- For MVCC, cluster index contains 2 hidden columns: tx_id, rollback_pointer and 1 bit in record header for delete mark. |
 - Secondary index doesn't have visibility infomation at record level, it just have page level (by PAGE_MAX_TRX_ID) |
-- Index only scan / Covering index is not really index "only scan" |
+- Index only scan / Covering index is not really "index only scan" |
+- Long transaction and Repeatable read can polute your database TODO: improve it.
 
 ---
 ## Reference:
