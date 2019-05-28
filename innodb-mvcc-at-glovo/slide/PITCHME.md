@@ -1,7 +1,7 @@
 
 # MySQL InnoDB Internal 101
 
-Duc Nguyen (Rey)
+-- Duc Nguyen (Rey)
 
 ---
 ## Agenda
@@ -75,7 +75,21 @@ Note:
 
 +++ 
 ### Page Header
-TODO: list page headers, highlight PAGE_MAX_TRX_ID
+|Name|Size|Meaning|
+| PAGE_N_DIR_SLOTS | 2 | number of directory slots in the Page Directory part; initial value = 2 |
+| PAGE_HEAP_TOP | 2 | record pointer to first record in heap |
+| PAGE_N_HEAP | 2 | number of heap records; initial value = 2 |
+| PAGE_FREE | 2 | record pointer to first free record |
+| PAGE_GARBAGE | 2 | "number of bytes in deleted records" |
+| PAGE_LAST_INSERT | 2 | record pointer to the last inserted record |
+| PAGE_DIRECTION | 2 | either PAGE_LEFT, PAGE_RIGHT, or PAGE_NO_DIRECTION |
+| PAGE_N_DIRECTION | 2 | number of consecutive inserts in the same direction, e.g. "last 5 were all to the left" |
+| PAGE_N_RECS | 2 | number of user records |
+| * PAGE_MAX_TRX_ID * | 8 | * the highest ID of a transaction which might have changed a record on the page (only set for secondary indexes) * |
+| PAGE_LEVEL | 2 | level within the index (0 for a leaf page) |
+| PAGE_INDEX_ID | 8 | identifier of the index the page belongs to |
+| PAGE_BTR_SEG_LEA | F | 10 | "file segment header for the leaf pages in a B-tree" (this is irrelev- ant here)
+| PAGE_BTR_SEG_TOP |1 0 | "file segment header for the non-leaf pages in a B-tree" (this is ir- relevant here) |
 
 +++
 ## Page Header
@@ -213,7 +227,7 @@ TODO:
 
 ---
 ## Reference:
-- [MySQL Documentation] (https://dev.mysql.com/doc/refman/8.0/en/innodb-introduction.html)
+- [MySQL Documentation] (http://kambing.ui.ac.id/onnopurbo/library/library-sw-hw/linux-howto/mysql/internals-en.pdf)
 - [MySQL Internals Manual] (https://dev.mysql.com/doc/internals/en/)
 - [Blog.jcole.us] (https://blog.jcole.us/innodb/)
 - [Percona] (https://www.percona.com/blog/)
