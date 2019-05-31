@@ -8,9 +8,9 @@
 
 1. What is MVCC
 2. InnoDB General On Disk Format
-3. Clustered Index & Secondary Index
+3. Clustered & Secondary Indexes
 4. MVCC & Insert/Update/Delete
-5. Bonus
+5. Bonus examples
 
 ---
 # 1. MVCC
@@ -25,8 +25,8 @@ A transaction can only see the **valid** data according to the current transacti
 ### Transaction Isolation levels
 * READ UNCOMMITTED: can see uncommitted data |
 * READ COMMITTED: can see last committed data |
-* Repeatable read: read commited data at it was on start of transaction |
-* Serializable: read block write, write block read |
+* REPEATABLE READ (*): read commited data at it was on start of transaction |
+* SERIALIZABLE: read block write, write block read |
 
 ---
 ### Multi-Version Concurrency Controll (MVCC)
@@ -143,9 +143,8 @@ TODO: draw a illustration about primary index, non-leaf-node page, leaf-node pag
 ---
 ## Clustered index row structure
 There are some system columns:
-- **transaction_id**: the transaction id that insert this record
+- **transaction_id**: the transaction id that inserts this record
 - **rollback_pointer**: pointer to the previous record version in rollback segment
-- **row_id**: in case there are no primary key and also no unique key, rowId will be used behide the scense.
 
 +++
 ## Record visualize
